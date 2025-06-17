@@ -77,22 +77,105 @@
 
 <h3 style="color:#E67E22;">📦 3. Phase 1 – Syllabus</h3>
 <p style="font-size:16px; color:#333;">
-  In this initial phase, we will lay the foundation by building a simple microservice and preparing the environment.
+  Phase 1 lays the foundation by building a real-world, end-to-end microservices architecture using core backend services and a complete DevOps toolchain.
 </p>
 
 <ul>
-  <li>☑️ Spring Boot Application (Registration or User Service)</li>
-  <li>☑️ MySQL Database Integration (via JDBC or Spring Data JPA)</li>
-  <li>☑️ REST APIs for Create & Fetch Operations</li>
-  <li>☑️ Python Script for data processing or automation</li>
-  <li>☑️ Dockerize both Spring Boot and Python services</li>
-  <li>☑️ Run containers using Docker Compose</li>
-  <li>☑️ Push Images to Nexus or DockerHub</li>
-  <li>☑️ Basic Jenkins Pipeline to build & push artifacts</li>
+  <li>⚙️ <strong>Build Three Services:</strong>
+    <ul>
+      <li>🟦 Two <strong>Spring Boot</strong> microservices (e.g., Registration & List)</li>
+      <li>🐍 One <strong>Python</strong> microservice for data processing or automation</li>
+    </ul>
+  </li>
+
+  <li>🛢️ <strong>Integrate Databases:</strong>
+    <ul>
+      <li>MySQL (Relational)</li>
+      <li>MongoDB (Document-oriented)</li>
+      <li>Redis (In-memory cache)</li>
+    </ul>
+  </li>
+
+  <li>🔁 <strong>Messaging & Queueing:</strong> Apache Kafka + Zookeeper</li>
+
+  <li>📦 <strong>Containerization:</strong> Dockerize all services</li>
+  
+  <li>📤 <strong>Artifact Management:</strong> Push images to Nexus & Harbor</li>
+
+  <li>☸️ <strong>Orchestration & GitOps:</strong>
+    <ul>
+      <li>Deploy to Kubernetes using <strong>Helm</strong></li>
+      <li>Automate delivery with <strong>ArgoCD</strong></li>
+    </ul>
+  </li>
+
+  <li>🔧 <strong>CI/CD Pipelines:</strong>
+    <ul>
+      <li>Use <strong>Jenkins</strong> for pipelines</li>
+      <li>Implement Triggers, Builds, Tests, and Deployments</li>
+    </ul>
+  </li>
+
+  <li>🔐 <strong>Security & DevSecOps:</strong>
+    <ul>
+      <li><strong>Trivy</strong> – Image vulnerability scanning</li>
+      <li><strong>SonarQube</strong> – Static code analysis</li>
+      <li><strong>OWASP Dependency Check</strong></li>
+    </ul>
+  </li>
+
+  <li>📈 <strong>Monitoring & Observability:</strong>
+    <ul>
+      <li><strong>Prometheus + Grafana</strong> – Metrics and dashboards</li>
+      <li><strong>Splunk</strong> – Logs and alerts</li>
+      <li><strong>OpenTelemetry</strong> – Tracing and instrumentation</li>
+    </ul>
+  </li>
 </ul>
 
 <p style="font-size:15px; color:#888;">
-  This sets the stage for moving to orchestration and GitOps in Phase 2.
+  📌 This phase focuses on foundational infrastructure, security, automation, and visibility — simulating real-world CI/CD and microservices deployment in Kubernetes.
 </p>
+
+ <li>
+    <strong style="color:#2980B9;">☁️ Phase 2 – Azure Cloud Integration</strong><br/>
+    Migrate microservices to Azure Cloud. Use Azure Kubernetes Service (AKS) for orchestration. Integrate core Azure services including:
+    <ul>
+      <li>Azure VM, VNet, NSG, Public IP</li>
+      <li>Azure Load Balancer</li>
+      <li>Azure Application Gateway</li>
+      <li>Azure Front Door & Traffic Manager</li>
+      <li>Azure Key Vault (for secrets)</li>
+      <li>Azure DevOps for CI/CD pipelines</li>
+    </ul>
+  </li>
+
+  <li>
+    <strong style="color:#27AE60;">🌩️ Phase 3 – AWS Cloud Integration</strong><br/>
+    Extend/migrate deployment to AWS Cloud. Use Elastic Kubernetes Service (EKS). Integrate with:
+    <ul>
+      <li>EC2, S3, EBS</li>
+      <li>AWS Load Balancer</li>
+      <li>AWS VPN Gateway</li>
+      <li>CloudFront for CDN & caching</li>
+      <li>AWS Systems Manager (SSM) for parameter store</li>
+      <li>IAM & Secrets Manager for security</li>
+    </ul>
+  </li>
+
+  <li>
+    <strong style="color:#9B59B6;">🚀 Phase 4 – Future Enhancements</strong><br/>
+    Ideas to be explored:
+    <ul>
+      <li>Service Mesh using Istio or Linkerd</li>
+      <li>Multi-cluster architecture (Hybrid Cloud)</li>
+      <li>Horizontal/Vertical autoscaling</li>
+      <li>Backup & Disaster Recovery (Velero, etc.)</li>
+      <li>API Gateway (e.g., Kong or Apigee)</li>
+      <li>More automation with Ansible or Terraform</li>
+      <li>Cost optimization techniques</li>
+    </ul>
+  </li>
+</ol>
 
 <hr style="border:1px dashed #ccc;"/>
