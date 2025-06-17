@@ -40,7 +40,7 @@
 </p>
 
 <hr style="border:1px dashed #ccc;"/>
-<h3 style="color:#1ABC9C;">📅 1. Project Plan</h3>
+<h3 style="color:#1ABC9C;"><a href="#1-project-plan">📅 1. Project Plan</a></h3>
 <p style="font-size:16px; color:#333;">
   The project will be built in a <strong>phase-wise</strong> approach, simulating the lifecycle of real-world application development, deployment, and operations. Each phase will:
 </p>
