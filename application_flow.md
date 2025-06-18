@@ -108,4 +108,4 @@
   <li>The application is well-suited for analytical pipelines, dashboards, and user interaction-based message processing.</li>
 </ul>
 
-<p><strong>📁 Image File:</strong> <code>app_flow.png</code> (Place this in the same GitHub repository folder)</p>
+
