@@ -34,7 +34,7 @@
     <li style="margin-bottom: 15px;">
       <strong style="font-size: 18px;">
         <!-- !!! UPDATE THIS LINK to point to your SDLC overview file -->
-        <a href="./docs/1-SDLC-DevOps-Overview.md" style="text-decoration:none; color:#0366d6;">
+        <a href="https://github.com/praveen581348/project_allinone/blob/master/SDLC-and-DevOps-Overview.md" style="text-decoration:none; color:#0366d6;">
           📘 1. Understanding the 'Why': SDLC, Cloud & DevOps
         </a>
       </strong><br/>
@@ -43,7 +43,7 @@
     <li>
       <strong style="font-size: 18px;">
         <!-- !!! UPDATE THIS LINK to point to your Application Flow file -->
-        <a href="./docs/2-Application-Flow.md" style="text-decoration:none; color:#0366d6;">
+        <a href="https://github.com/praveen581348/project_allinone/blob/master/application_flow.md" style="text-decoration:none; color:#0366d6;">
           🗺️ 2. Application Architecture & Flow
         </a>
       </strong><br/>
