@@ -1,131 +1,96 @@
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';">
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
 
-<h1 style="color:#2F80ED;">⚙️ Setting Up a Local Kubernetes Cluster with kind</h1>
+<h1 align="center" style="color:#2F80ED;">⚙️ Setting Up Kubernetes Cluster Using kind</h1>
 
-<p>This guide will help you set up a full-featured local Kubernetes cluster using <strong>kind (Kubernetes IN Docker)</strong>. It's designed to help you test and run microservices such as Spring Boot apps, Kafka, Redis, MySQL, MongoDB, Jenkins, Nexus, SonarQube, and more — all locally on your machine.</p>
+<p style="text-align:center; font-size:16px; color:#333;">
+  A complete local development environment for deploying microservices using kind (Kubernetes IN Docker).
+</p>
 
-<hr/>
+<hr style="border:1px solid #ddd;"/>
 
 <h2 style="color:#27AE60;">🔧 What is kind?</h2>
-<p><strong>kind</strong> is a tool that lets you run Kubernetes clusters inside Docker containers. It's perfect for:</p>
+<p><strong>kind</strong> stands for <em>Kubernetes IN Docker</em>. It lets you run a full Kubernetes cluster inside Docker containers, making it ideal for:</p>
 <ul>
-  <li>🧪 Local testing and development</li>
-  <li>🔄 CI/CD pipeline testing</li>
-  <li>🎓 Learning Kubernetes</li>
+  <li>🔬 Local development and testing</li>
+  <li>🔁 CI/CD workflows</li>
+  <li>🎓 Learning Kubernetes hands-on</li>
 </ul>
 
 <hr/>
 
-<h2 style="color:#F39C12;">💻 Setup on macOS</h2>
+<h2 style="color:#F39C12;">💻 Setup on macOS (or Linux)</h2>
 <ol>
-  <li><strong>Install Docker Desktop</strong><br/>
-  Download and install from <a href="https://www.docker.com/products/docker-desktop" target="_blank">Docker Desktop</a>. Make sure Docker is running.</li>
-  <li><strong>Install kind</strong><br/>
-  <code>brew install kind</code></li>
-  <li><strong>Install kubectl</strong><br/>
-  <code>brew install kubectl</code></li>
+  <li>
+    <strong>Install Docker</strong>  
+    <br/>Download & install: <a href="https://www.docker.com/products/docker-desktop" target="_blank">Docker Desktop</a>.  
+    <em>Make sure Docker is running.</em>
+  </li>
+  <li>
+    <strong>Install kind</strong>  
+    <br/><code>brew install kind</code>
+  </li>
+  <li>
+    <strong>Install kubectl</strong>  
+    <br/><code>brew install kubectl</code>
+  </li>
 </ol>
 
 <hr/>
 
-<h2 style="color:#8E44AD;">🚀 Create Your Cluster</h2>
-<p>Create your Kubernetes cluster using the following config file named <code>cluster.yaml</code>:</p>
-
-<pre><code>kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-name: demo
-nodes:
-  - role: control-plane
-    extraPortMappings:
-      - containerPort: 30080  # Jenkins
-        hostPort: 30080
-        protocol: TCP
-      - containerPort: 30081  # Nexus
-        hostPort: 30081
-        protocol: TCP
-      - containerPort: 30090  # SonarQube
-        hostPort: 30090
-        protocol: TCP
-      - containerPort: 30094  # Application UIs
-        hostPort: 30094
-        protocol: TCP
-      - containerPort: 30100  # Jenkins agent port
-        hostPort: 30100
-        protocol: TCP
-    extraMounts:
-      - hostPath: /var/run/docker.sock
-        containerPath: /var/run/docker.sock
-
-  - role: worker
-    extraMounts:
-      - hostPath: /var/run/docker.sock
-        containerPath: /var/run/docker.sock
-
-  - role: worker
-    extraMounts:
-      - hostPath: /var/run/docker.sock
-        containerPath: /var/run/docker.sock</code></pre>
-
-<p>Then run:</p>
+<h2 style="color:#2980B9;">🚀 Creating the Cluster</h2>
+<p>Create a cluster with custom ports using the following command:</p>
 <pre><code>kind create cluster --config cluster.yaml</code></pre>
 
-<hr/>
+<p><strong>📄 File:</strong> <code>cluster.yaml</code> (stored in <a href="https://github.com/praveen581348/cluster" target="_blank">GitHub Repo</a>)</p>
 
-<h2 style="color:#2C3E50;">✅ Verify Cluster Setup</h2>
-<p>To make sure everything is up and running, run the following commands:</p>
-
+<p>This file:</p>
 <ul>
-  <li><code>kubectl get nodes</code> – should list your 1 control-plane and 2 worker nodes</li>
-  <li><code>kubectl cluster-info</code> – provides master and DNS details</li>
-  <li><code>kubectl get pods -A</code> – see if system pods are running correctly</li>
-</ul>
-
-<p>You should see all your nodes in <code>Ready</code> state and pods in <code>Running</code> or <code>Completed</code>.</p>
-
-<hr/>
-
-<h2 style="color:#3498DB;">📁 Repository Structure</h2>
-<p><strong>GitHub Repo:</strong> <a href="https://github.com/praveen581348/cluster" target="_blank">cluster</a></p>
-<ul>
-  <li><code>cluster.yaml</code> – contains complete cluster configuration used to set up the environment</li>
+  <li>Creates 1 control-plane node and 2 worker nodes</li>
+  <li>Maps container ports to host ports so services (Jenkins, Nexus, etc.) are accessible</li>
+  <li>Mounts Docker socket to support inner-Docker builds</li>
 </ul>
 
 <hr/>
 
-<h2 style="color:#16A085;">🛠️ Common kind Commands</h2>
-<table style="width:100%; border-collapse: collapse;">
-  <thead>
-    <tr style="background:#f6f8fa;">
-      <th style="border:1px solid #ddd; padding:8px;">Task</th>
-      <th style="border:1px solid #ddd; padding:8px;">Command</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border:1px solid #ddd; padding:8px;">✅ Create a cluster</td>
-      <td style="border:1px solid #ddd; padding:8px;">kind create cluster --config cluster.yaml</td>
-    </tr>
-    <tr>
-      <td style="border:1px solid #ddd; padding:8px;">❌ Delete a cluster</td>
-      <td style="border:1px solid #ddd; padding:8px;">kind delete cluster --name demo</td>
-    </tr>
-    <tr>
-      <td style="border:1px solid #ddd; padding:8px;">📋 List clusters</td>
-      <td style="border:1px solid #ddd; padding:8px;">kind get clusters</td>
-    </tr>
-    <tr>
-      <td style="border:1px solid #ddd; padding:8px;">📦 Load Docker image</td>
-      <td style="border:1px solid #ddd; padding:8px;">kind load docker-image my-image:tag --name demo</td>
-    </tr>
-  </tbody>
+<h2 style="color:#9B59B6;">✅ Verifying Cluster Creation</h2>
+<p>Once the cluster is created, you can verify it using:</p>
+<pre><code>kubectl get nodes</code></pre>
+<p>You should see output listing your control-plane and worker nodes in <code>Ready</code> status.</p>
+
+<hr/>
+
+<h2 style="color:#8E44AD;">📘 Basic kind Commands</h2>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
+<thead style="background-color:#f6f8fa;">
+<tr><th>Task</th><th>Command</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Create Cluster</td><td><code>kind create cluster --config cluster.yaml</code></td><td>Creates a kind cluster with specified configuration</td></tr>
+<tr><td>Delete Cluster</td><td><code>kind delete cluster --name demo</code></td><td>Deletes the cluster named <code>demo</code></td></tr>
+<tr><td>List Clusters</td><td><code>kind get clusters</code></td><td>Lists all clusters managed by kind</td></tr>
+<tr><td>Load Image</td><td><code>kind load docker-image my-image:tag --name demo</code></td><td>Loads a locally built Docker image into the cluster</td></tr>
+</tbody>
 </table>
 
 <hr/>
 
-<h2 style="color:#9B59B6;">🔗 Learn More</h2>
-<ul>
-  <li><a href="https://chatgpt.com/share/6857e7f1-2d24-8001-88c5-41d0bf8c0c51" target="_blank">📘 kind  Documentation</a></li>
-  <li><a href="https://chatgpt.com/share/6857e648-5de0-8001-ab14-7897f0aa5989" target="_blank">☸️ Kubernetes Docs</a></li>
-</ul>
+<h2 style="color:#34495E;">🧭 kubectl Context Management</h2>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
+<thead style="background-color:#f6f8fa;">
+<tr><th>Task</th><th>Command</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>List Contexts</td><td><code>kubectl config get-contexts</code></td><td>Shows all available contexts</td></tr>
+<tr><td>Use Context</td><td><code>kubectl config use-context kind-demo</code></td><td>Switches to the <code>kind-demo</code> cluster context</td></tr>
+<tr><td>Delete Context</td><td><code>kubectl config delete-context kind-demo</code></td><td>Removes the context from kubeconfig</td></tr>
+<tr><td>Test Connection</td><td><code>kubectl get nodes</code></td><td>Verifies if cluster is reachable</td></tr>
+</tbody>
+</table>
+
+<hr/>
+
+<h2 style="color:#2F80ED;">📁 GitHub Repository</h2>
+<p>Find all the cluster setup files here:</p>
+<p><strong>🔗 <a href="https://github.com/praveen581348/cluster" target="_blank">https://github.com/praveen581348/cluster</a></strong></p>
 
 </div>
