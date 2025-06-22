@@ -57,6 +57,14 @@
   </strong><br/>
   <span style="font-size:15px; color:#586069;">Understand the container orchestration landscape, why we chose Kubernetes, and how kind helps us prototype the full system locally in Phase 1.</span>
 </li>
+<li>
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_cluster.md" style="text-decoration:none; color:#0366d6;">
+      🔧 4. Phase 1.1 – Setup Kubernetes Cluster (kind)
+    </a>
+  </strong><br/>
+  <span style="font-size:15px; color:#586069;">Create a multi-node local Kubernetes cluster using kind with proper port mappings to support all microservices, DevOps, and monitoring tools.</span>
+</li>
 
   </ul>
 </div>
