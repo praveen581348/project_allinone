@@ -13,7 +13,7 @@
   <li>📦 CI/CD pipelines and sandboxing</li>
   <li>🎓 Learning Kubernetes without a cloud setup</li>
 </ul>
-
+<img src="./kind.png" alt="kind cluster architecture" width="800"/> <hr/>
 <hr/>
 
 <h2>💻 Prerequisites for macOS</h2>
