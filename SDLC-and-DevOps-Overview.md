@@ -119,6 +119,6 @@
 
 <p><strong>See Also:</strong></p>
 <ul>
-  <li><a href="./README.md">README.md – Project Introduction</a></li>
+  <li><a href="https://github.com/praveen581348/project_allinone">README.md – Project Introduction</a></li>
   <li><a href="./application_flow.md">application_flow.md – Microservices Architecture</a></li>
 </ul>

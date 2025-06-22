@@ -40,15 +40,24 @@
       </strong><br/>
       <span style="font-size:15px; color:#586069;">Begin with the core concepts. Learn about the modern Software Development Lifecycle and the roles of DevOps and the Cloud.</span>
     </li>
-    <li>
-      <strong style="font-size: 18px;">
-        <!-- !!! UPDATE THIS LINK to point to your Application Flow file -->
-        <a href="https://github.com/praveen581348/project_allinone/blob/master/application_flow.md" style="text-decoration:none; color:#0366d6;">
-          🗺️ 2. Application Architecture & Flow
-        </a>
-      </strong><br/>
-      <span style="font-size:15px; color:#586069;">Explore the end-to-end architecture, data flow, and interactions between all microservices and databases.</span>
-    </li>
+    <li style="margin-bottom: 15px;">
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/application_flow.md" style="text-decoration:none; color:#0366d6;">
+      🗺️ 2. Application Architecture & Flow
+    </a>
+  </strong><br/>
+  <span style="font-size:15px; color:#586069;">Explore the end-to-end architecture, data flow, and interactions between all microservices and databases.</span>
+</li>
+
+<li>
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/why_docker_kubernetes_kind.md" style="text-decoration:none; color:#0366d6;">
+      ☸️ 3. Why Docker, Kubernetes & kind?
+    </a>
+  </strong><br/>
+  <span style="font-size:15px; color:#586069;">Understand the container orchestration landscape, why we chose Kubernetes, and how kind helps us prototype the full system locally in Phase 1.</span>
+</li>
+
   </ul>
 </div>
 
