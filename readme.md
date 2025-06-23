@@ -65,6 +65,16 @@
   </strong><br/>
   <span style="font-size:15px; color:#586069;">Create a multi-node local Kubernetes cluster using kind with proper port mappings to support all microservices, DevOps, and monitoring tools.</span>
 </li>
+<li>
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/why_springboot_maven.md" style="text-decoration:none; color:#0366d6;">
+      🌼 5. Why Spring Boot & Maven?
+    </a>
+  </strong><br/>
+  <span style="font-size:15px; color:#586069;">
+    Discover why we rely on Spring Boot for rapid microservice development and Maven for streamlined dependency &amp; build management in our Phase 1 prototype.
+  </span>
+</li>
 
   </ul>
 </div>
