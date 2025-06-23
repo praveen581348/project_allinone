@@ -1,4 +1,4 @@
-<h1> Why Java Spring Boot + Maven - Developer s</h1>
+<h1> Why Java Spring Boot + Maven</h1>
 
 <p align="center">
   <img src="springboot.png" alt="Spring Boot Architecture" width="600"/>
