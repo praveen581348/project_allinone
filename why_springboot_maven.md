@@ -1,10 +1,11 @@
-<h1> Why Java Spring Boot + Maven</h1>
+<h1>Why Java Spring Boot + Maven</h1>
 
 <p align="center">
   <img src="springboot.png" alt="Spring Boot Architecture" width="600"/>
 </p>
 
 <h2>🏗️ Why Learn Spring Boot as a DevOps/Cloud/SRE Engineer?</h2>
+
 <p>
 In our application architecture, we use <strong>Spring Boot</strong> and <strong>Maven</strong> to build and run two major services:
 </p>
@@ -37,8 +38,15 @@ These services form the core of our backend system, running in containers, commu
 Spring Boot is a powerful framework built on top of the Spring Framework that simplifies the development of Java-based applications. It allows developers to create <strong>standalone, production-ready applications</strong> with minimal setup.
 </p>
 
+<p>
+📖 <strong>Detailed Spring Boot Explanation:</strong><br/>
+👉 <a href="https://chatgpt.com/share/685854c4-f9b4-8001-a16d-bab5320f29d5" target="_blank">Spring Boot Notes and Concepts</a>
+</p>
+
+<hr>
+
 <h2>✅ Why Spring Boot?</h2>
-<table>
+<table border="1">
   <thead>
     <tr><th>Feature</th><th>Benefit</th></tr>
   </thead>
@@ -53,7 +61,7 @@ Spring Boot is a powerful framework built on top of the Spring Framework that si
 </table>
 
 <blockquote>
-🛠️ <strong>Real-life usage</strong>: Our applications <code>senderservice</code> and <code>receiverservice</code> are developed using Spring Boot.
+🛠️ <strong>Real-life usage:</strong> Our applications <code>senderservice</code> and <code>receiverservice</code> are developed using Spring Boot.
 </blockquote>
 
 <hr>
@@ -83,6 +91,11 @@ springboot-app/
 Maven is a <strong>build automation and dependency management tool</strong> for Java projects.
 </p>
 
+<p>
+📖 <strong>Detailed Maven Concepts & Lifecycle:</strong><br/>
+👉 <a href="https://chatgpt.com/share/6859922a-e6f4-8001-864e-ba59b47ad706" target="_blank">Maven Notes and Lifecycle</a>
+</p>
+
 <h3>🔧 Why Maven?</h3>
 <ul>
   <li>Manages <strong>dependencies</strong> from central repositories</li>
@@ -95,7 +108,7 @@ Maven is a <strong>build automation and dependency management tool</strong> for 
 
 <h2>🔁 Maven Lifecycle Phases</h2>
 
-<table>
+<table border="1">
   <thead>
     <tr><th>Phase</th><th>What it does</th></tr>
   </thead>
@@ -117,7 +130,6 @@ Maven is a <strong>build automation and dependency management tool</strong> for 
 
 <pre><code>&lt;project xmlns="http://maven.apache.org/POM/4.0.0"&gt;
   &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-
   &lt;groupId&gt;com.example&lt;/groupId&gt;
   &lt;artifactId&gt;demo&lt;/artifactId&gt;
   &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
@@ -153,17 +165,17 @@ Maven is a <strong>build automation and dependency management tool</strong> for 
 
 <h2>🌀 Spring Boot Setup using Spring Initializr</h2>
 <ol>
-  <li>Go to <a href="https://start.spring.io">https://start.spring.io</a></li>
+  <li>Go to <a href="https://start.spring.io" target="_blank">https://start.spring.io</a></li>
   <li>Select Maven, Java, and dependencies (Spring Web)</li>
   <li>Generate the project</li>
-  <li>Unzip &amp; open in IDE (IntelliJ / VSCode)</li>
+  <li>Unzip & open in IDE (IntelliJ / VSCode)</li>
 </ol>
 
 <hr>
 
 <h2>👋 Hello World Example</h2>
 
-<h3>📁 <code>DemoApplication.java</code></h3>
+<h3><code>DemoApplication.java</code></h3>
 
 <pre><code>package com.example.demo;
 
@@ -178,7 +190,7 @@ public class DemoApplication {
 }
 </code></pre>
 
-<h3>📁 <code>HelloController.java</code></h3>
+<h3><code>HelloController.java</code></h3>
 
 <pre><code>package com.example.demo;
 
@@ -195,26 +207,26 @@ public class HelloController {
 }
 </code></pre>
 
-<h3>📄 <code>application.properties</code></h3>
+<h3><code>application.properties</code></h3>
 
 <pre><code>server.port=8080</code></pre>
 
 <h3>▶️ Run the App</h3>
 <pre><code>mvn spring-boot:run</code></pre>
-<p>Open <a href="http://localhost:8080/hello">http://localhost:8080/hello</a> in browser → You will see <strong>Hello, Spring Boot!</strong></p>
+<p>Open <a href="http://localhost:8080/hello" target="_blank">http://localhost:8080/hello</a> in your browser → You’ll see <strong>Hello, Spring Boot!</strong></p>
 
 <hr>
 
 <h2>✅ Summary</h2>
 
-<table>
+<table border="1">
   <thead>
     <tr><th>Topic</th><th>Description</th></tr>
   </thead>
   <tbody>
     <tr><td>Spring Boot</td><td>Java framework for modern applications</td></tr>
     <tr><td>Why It's Popular</td><td>Auto config, embedded servers, microservices</td></tr>
-    <tr><td>Maven</td><td>Java build tool &amp; dependency manager</td></tr>
+    <tr><td>Maven</td><td>Java build tool & dependency manager</td></tr>
     <tr><td>Folder Structure</td><td>Clean, modular structure</td></tr>
     <tr><td>Real App Examples</td><td><code>senderservice</code>, <code>receiverservice</code></td></tr>
     <tr><td>Hello World</td><td>Demo with controller + endpoint</td></tr>
@@ -234,4 +246,6 @@ mvn install               # Install to local Maven repo
 mvn spring-boot:run       # Run Spring Boot app
 </code></pre>
 
-
+<blockquote>
+📘 Understanding this foundation helps DevOps & Platform engineers manage and operate Spring Boot services more efficiently in a cloud-native, CI/CD, and containerized environment.
+</blockquote>
