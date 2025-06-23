@@ -2,6 +2,7 @@
 
 <p align="center">
   <img src="springboot.png" alt="Spring Boot Architecture" width="600"/>
+  <img src="maven.png" alt="Spring Boot Architecture" width="600"/>
 </p>
 
 <h2>🏗️ Why Learn Spring Boot as a DevOps/Cloud/SRE Engineer?</h2>
