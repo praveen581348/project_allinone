@@ -85,7 +85,38 @@
 </span>
  </li>
 
-  </ul>
+ <li style="margin-bottom: 15px;">
+    <strong style="font-size: 18px;">
+      📤 7. Phase 1.3 – SenderService (Kafka Producer Microservice)
+    </strong><br/>
+    <ul style="list-style-type: none; padding-left: 20px; margin-top: 10px;">
+      <li style="margin-bottom: 10px;">
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/create_senderservice.md" style="text-decoration:none; color:#0366d6;">
+            📌 1.3.1 – Create SenderService – Spring Boot Kafka Producer
+          </a>
+        </strong><br/>
+        <span style="font-size:14px; color:#586069;">Step-by-step guide to develop the Kafka producer service using Spring Boot and `spring-kafka`.</span>
+      </li>
+      <li style="margin-bottom: 10px;">
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" style="text-decoration:none; color:#0366d6;">
+            📦 1.3.2 – Run SenderService as a Pod in Kubernetes
+          </a>
+        </strong><br/>
+        <span style="font-size:14px; color:#586069;">Deploy SenderService in kind using Deployment YAML. Includes `kubectl` commands, NodePort, and logs.</span>
+      </li>
+      <li>
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" style="text-decoration:none; color:#0366d6;">
+            ✅ 1.3.3 – Verify SenderService Producing to Kafka
+          </a>
+        </strong><br/>
+        <span style="font-size:14px; color:#586069;">Check logs and use Kafka CLI to confirm message production from the SenderService pod.</span>
+      </li>
+    </ul>
+  </li>
+</ul>
 </div>
 
 <hr style="border:1px dashed #ccc; margin-top:30px; margin-bottom:30px;"/>
@@ -217,5 +248,6 @@
    <li>🚀 <a href="https://github.com/praveen581348/project_allinone/blob/master/create_senderservice.md" target="_blank">Create SenderService – Spring Boot Kafka Producer</a></li>
    <li>📁 <a href="https://github.com/praveen581348/senderservice" target="_blank">SenderService Git Repository</a></li>
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">Run SenderService as a Pod (Kubernetes Deployment Guide)</a></li>
+    <li>✅ <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" target="_blank">Verify SenderService Producing to Kafka</a></li>
 
 </ol>
