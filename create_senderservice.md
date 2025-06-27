@@ -2,6 +2,9 @@
 <h1>🚀 SenderService – Spring Boot Kafka Producer</h1> 
 <p> <strong>SenderService</strong> is a Spring Boot microservice designed to produce messages to Apache Kafka. It includes a simple HTML frontend, connects to Kafka via <code>spring-kafka</code>, and is part of our end-to-end microservices system. </p> 
 <hr/> 
+<p>
+  <img src="./senderservice.png" alt="Sender Service" width="100%" />
+</p>
 <h2>📌 Why Spring Boot?</h2> 
 <ul> 
 <li>⚙️ <strong>Auto-configuration:</strong> Minimizes boilerplate and config</li> 
