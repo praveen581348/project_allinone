@@ -13,6 +13,12 @@
  </li> 
  <li><strong>Confirmation Page:</strong> Message sent successfully</li>
   <li><strong>Kafka CLI Output:</strong> Received message from topic</li> </ul> 
+
+  <p align="center">
+  <img src="sender1.png"  width="600"/>
+  <img src="sender2.png"  width="600"/>
+  <img src="kafka1.png"  width="600"/>
+</p>
   <hr/> 
   <h2>📍 Step-by-Step Verification</h2> 
   <h3>1️⃣ Access SenderService UI</h3> 
