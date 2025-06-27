@@ -3,6 +3,9 @@
 <p>
 In this step, we deploy our first microservice – <strong>SenderService</strong> – as a <strong>Pod</strong> inside a Kubernetes cluster. This guide covers building the application, creating a Docker image, and deploying the service on Kubernetes using kind.
 </p>
+<p>
+  <img src="./run_sender_as_pod.png" alt="Application Flow Diagram" width="100%" />
+</p>
 
 <hr/>
 
