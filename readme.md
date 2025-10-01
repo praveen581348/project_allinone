@@ -1,125 +1,196 @@
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';">
 
 <h1 align="center" style="color:#2F80ED;">
-  🚀 DevOps & Cloud Microservices Lab
+  🚀 DevOps & Cloud Microservices Lab
 </h1>
 
 <p align="center" style="font-size:18px; color:#444;">
-  <strong>A phase-wise real-time project that demonstrates how modern applications are built, deployed, secured, and monitored using a full spectrum of DevOps, Cloud, and container orchestration tools.</strong>
+  <strong>A phase-wise real-time project that demonstrates how modern applications are built, deployed, secured, and monitored using a full spectrum of DevOps, Cloud, and container orchestration tools.</strong>
 </p>
 
 <hr style="border:1px solid #ddd;"/>
 
 <h3 style="color:#27AE60;">🧩 Goal</h3>
 <p style="font-size:16px; color:#333;">
-  Build an <strong>end-to-end microservices-based architecture</strong> to understand how real-time systems function at scale using modern <strong>DevOps</strong> and <strong>Cloud-native</strong> practices.
+  Build an <strong>end-to-end microservices-based architecture</strong> to understand how real-time systems function at scale using modern <strong>DevOps</strong> and <strong>Cloud-native</strong> practices.
 </p>
 
 <h3 style="color:#F39C12;">🎯 Overall Intention</h3>
 <p style="font-size:16px; color:#333;">
-  The overall intention of this project is to gain <strong>hands-on experience</strong> with a wide range of <strong>industry-standard technologies</strong> used in real-time production environments.<br/>
-  The project is built completely <strong>from scratch</strong> in multiple phases to deeply understand the working of each technology and its real-world application.
+  The overall intention of this project is to gain <strong>hands-on experience</strong> with a wide range of <strong>industry-standard technologies</strong> used in real-time production environments.
+
+
+
+  The project is built completely <strong>from scratch</strong> in multiple phases to deeply understand the working of each technology and its real-world application.
 </p>
 
-<!-- =================================================================== -->
-<!-- ================== NEW PROJECT NAVIGATION SECTION ================= -->
-<!-- =================================================================== -->
 <hr style="border:1px dashed #ccc; margin-top:30px; margin-bottom:30px;"/>
 
 <h2 align="center" style="color:#3498DB;">🧭 Project Navigation</h2>
 <p align="center" style="color:#555;">Start your journey here. These documents provide the foundational knowledge and architecture for the project.</p>
 
 <div style="background-color:#f6f8fa; padding: 20px; border-radius: 8px; border: 1px solid #e1e4e8; margin: 20px 0;">
-  <ul style="list-style-type: none; padding-left: 0;">
-    <li style="margin-bottom: 15px;">
-      <strong style="font-size: 18px;">
-        <!-- !!! UPDATE THIS LINK to point to your SDLC overview file -->
-        <a href="https://github.com/praveen581348/project_allinone/blob/master/SDLC-and-DevOps-Overview.md" style="text-decoration:none; color:#0366d6;">
-          📘 1. Understanding the 'Why': SDLC, Cloud & DevOps
-        </a>
-      </strong><br/>
-      <span style="font-size:15px; color:#586069;">Begin with the core concepts. Learn about the modern Software Development Lifecycle and the roles of DevOps and the Cloud.</span>
-    </li>
-    <li style="margin-bottom: 15px;">
-  <strong style="font-size: 18px;">
-    <a href="https://github.com/praveen581348/project_allinone/blob/master/application_flow.md" style="text-decoration:none; color:#0366d6;">
-      🗺️ 2. Application Architecture & Flow
-    </a>
-  </strong><br/>
-  <span style="font-size:15px; color:#586069;">Explore the end-to-end architecture, data flow, and interactions between all microservices and databases.</span>
+  <ul style="list-style-type: none; padding-left: 0;">
+    <li style="margin-bottom: 15px;">
+      <strong style="font-size: 18px;">
+        <a href="https://github.com/praveen581348/project_allinone/blob/master/SDLC-and-DevOps-Overview.md" style="text-decoration:none; color:#0366d6;">
+          📘 1. Understanding the 'Why': SDLC, Cloud & DevOps
+        </a>
+      </strong>
+
+
+
+      <span style="font-size:15px; color:#586069;">Begin with the core concepts. Learn about the modern Software Development Lifecycle and the roles of DevOps and the Cloud.</span>
+    </li>
+    <li style="margin-bottom: 15px;">
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/application_flow.md" style="text-decoration:none; color:#0366d6;">
+      🗺️ 2. Application Architecture & Flow
+    </a>
+  </strong>
+
+
+
+  <span style="font-size:15px; color:#586069;">Explore the end-to-end architecture, data flow, and interactions between all microservices and databases.</span>
 </li>
 
 <li>
-  <strong style="font-size: 18px;">
-    <a href="https://github.com/praveen581348/project_allinone/blob/master/why_docker_kubernetes_kind.md" style="text-decoration:none; color:#0366d6;">
-      ☸️ 3. Why Docker, Kubernetes & kind?
-    </a>
-  </strong><br/>
-  <span style="font-size:15px; color:#586069;">Understand the container orchestration landscape, why we chose Kubernetes, and how kind helps us prototype the full system locally in Phase 1.</span>
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/why_docker_kubernetes_kind.md" style="text-decoration:none; color:#0366d6;">
+      ☸️ 3. Why Docker, Kubernetes & kind?
+    </a>
+  </strong>
+
+
+
+  <span style="font-size:15px; color:#586069;">Understand the container orchestration landscape, why we chose Kubernetes, and how kind helps us prototype the full system locally in Phase 1.</span>
 </li>
 <li>
-  <strong style="font-size: 18px;">
-    <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_cluster.md" style="text-decoration:none; color:#0366d6;">
-      🔧 4. Phase 1.1 – Setup Kubernetes Cluster (kind)
-    </a>
-  </strong><br/>
-  <span style="font-size:15px; color:#586069;">Create a multi-node local Kubernetes cluster using kind with proper port mappings to support all microservices, DevOps, and monitoring tools.</span>
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_cluster.md" style="text-decoration:none; color:#0366d6;">
+      🔧 4. Phase 1.1 – Setup Kubernetes Cluster (kind)
+    </a>
+  </strong>
+
+
+
+  <span style="font-size:15px; color:#586069;">Create a multi-node local Kubernetes cluster using kind with proper port mappings to support all microservices, DevOps, and monitoring tools.</span>
 </li>
 <li>
-  <strong style="font-size: 18px;">
-    <a href="https://github.com/praveen581348/project_allinone/blob/master/why_springboot_maven.md" style="text-decoration:none; color:#0366d6;">
-      🌼 5. Why Spring Boot & Maven?
-    </a>
-  </strong><br/>
-  <span style="font-size:15px; color:#586069;">
-    Discover why we rely on Spring Boot for rapid microservice development and Maven for streamlined dependency &amp; build management in our Phase 1 prototype.
-  </span>
+  <strong style="font-size: 18px;">
+    <a href="https://github.com/praveen581348/project_allinone/blob/master/why_springboot_maven.md" style="text-decoration:none; color:#0366d6;">
+      🌼 5. Why Spring Boot & Maven?
+    </a>
+  </strong>
+
+
+
+  <span style="font-size:15px; color:#586069;">
+    Discover why we rely on Spring Boot for rapid microservice development and Maven for streamlined dependency &amp; build management in our Phase 1 prototype.
+  </span>
 </li>
-<li> 
-<strong style="font-size: 18px;"> 
-<a href="https://github.com/praveen581348/project_allinone/blob/master/setup_kafka_zookpeer.md" style="text-decoration:none; color:#0366d6;"> 
-📡 6. Phase 1.2 – Kafka + ZooKeeper Setup on kind 
-</a> 
-</strong><br/> 
-<span style="font-size:15px; color:#586069;"> Setup Kafka and ZooKeeper in the local kind cluster for messaging between microservices. Includes YAML files, CLI testing, architecture diagram, and real use case. 
+<li>
+<strong style="font-size: 18px;">
+<a href="https://github.com/praveen581348/project_allinone/blob/master/setup_kafka_zookpeer.md" style="text-decoration:none; color:#0366d6;">
+📡 6. Phase 1.2 – Kafka + ZooKeeper Setup on kind
+</a>
+</strong>
+
+
+
+<span style="font-size:15px; color:#586069;"> Setup Kafka and ZooKeeper in the local kind cluster for messaging between microservices. Includes YAML files, CLI testing, architecture diagram, and real use case.
 </span>
- </li>
+ </li>
 
- <li style="margin-bottom: 15px;">
-    <strong style="font-size: 18px;">
-      📤 7. Phase 1.3 – SenderService (Kafka Producer Microservice)
-    </strong><br/>
-    <ul style="list-style-type: none; padding-left: 20px; margin-top: 10px;">
-      <li style="margin-bottom: 10px;">
-        <strong style="font-size: 17px;">
-          <a href="https://github.com/praveen581348/project_allinone/blob/master/create_senderservice.md" style="text-decoration:none; color:#0366d6;">
-            📌 1.3.1 – Create SenderService – Spring Boot Kafka Producer
-          </a>
-        </strong><br/>
-        <span style="font-size:14px; color:#586069;">Step-by-step guide to develop the Kafka producer service using Spring Boot and `spring-kafka`.</span>
-      </li>
-      <li style="margin-bottom: 10px;">
-        <strong style="font-size: 17px;">
-          <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" style="text-decoration:none; color:#0366d6;">
-            📦 1.3.2 – Run SenderService as a Pod in Kubernetes
-          </a>
-        </strong><br/>
-        <span style="font-size:14px; color:#586069;">Deploy SenderService in kind using Deployment YAML. Includes `kubectl` commands, NodePort, and logs.</span>
-      </li>
-      <li>
-        <strong style="font-size: 17px;">
-          <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" style="text-decoration:none; color:#0366d6;">
-            ✅ 1.3.3 – Verify SenderService Producing to Kafka
-          </a>
-        </strong><br/>
-        <span style="font-size:14px; color:#586069;">Check logs and use Kafka CLI to confirm message production from the SenderService pod.</span>
-      </li>
-    </ul>
-  </li>
+ <li style="margin-bottom: 15px;">
+    <strong style="font-size: 18px;">
+      📤 7. Phase 1.3 – SenderService (Kafka Producer Microservice)
+    </strong>
+
+
+
+    <ul style="list-style-type: none; padding-left: 20px; margin-top: 10px;">
+      <li style="margin-bottom: 10px;">
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/create_senderservice.md" style="text-decoration:none; color:#0366d6;">
+            📌 1.3.1 – Create SenderService – Spring Boot Kafka Producer
+          </a>
+        </strong>
+
+
+
+        <span style="font-size:14px; color:#586069;">Step-by-step guide to develop the Kafka producer service using Spring Boot and spring-kafka.</span>
+      </li>
+      <li style="margin-bottom: 10px;">
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" style="text-decoration:none; color:#0366d6;">
+            📦 1.3.2 – Run SenderService as a Pod in Kubernetes
+          </a>
+        </strong>
+
+
+
+        <span style="font-size:14px; color:#586069;">Deploy SenderService in kind using Deployment YAML. Includes kubectl commands, NodePort, and logs.</span>
+      </li>
+      <li>
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" style="text-decoration:none; color:#0366d6;">
+            ✅ 1.3.3 – Verify SenderService Producing to Kafka
+          </a>
+        </strong>
+
+
+
+        <span style="font-size:14px; color:#586069;">Check logs and use Kafka CLI to confirm message production from the SenderService pod.</span>
+      </li>
+    </ul>
+  </li>
+  <li style="margin-bottom: 15px;">
+    <strong style="font-size: 18px;">
+      💾 8. Phase 1.4 – Database Deployments
+    </strong>
+
+
+
+    <ul style="list-style-type: none; padding-left: 20px; margin-top: 10px;">
+      <li style="margin-bottom: 10px;">
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/create_mysql.md" style="text-decoration:none; color:#0366d6;">
+            📌 1.4.1 – Create MySQL Cluster
+          </a>
+        </strong>
+
+
+
+        <span style="font-size:14px; color:#586069;">Deploy MySQL with persistent storage and a dedicated namespace.</span>
+      </li>
+      <li style="margin-bottom: 10px;">
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/create_redis.md" style="text-decoration:none; color:#0366d6;">
+            📌 1.4.2 – Create Redis Cluster
+          </a>
+        </strong>
+
+
+
+        <span style="font-size:14px; color:#586069;">Deploy Redis as a caching layer for high-speed lookups.</span>
+      </li>
+      <li>
+        <strong style="font-size: 17px;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/create_mongodb.md" style="text-decoration:none; color:#0366d6;">
+            📌 1.4.3 – Create MongoDB Cluster
+          </a>
+        </strong>
+
+
+
+        <span style="font-size:14px; color:#586069;">Deploy MongoDB as a final historical and analytical data store.</span>
+      </li>
+    </ul>
+  </li>
+
 </ul>
 </div>
-
-<hr style="border:1px dashed #ccc; margin-top:30px; margin-bottom:30px;"/>
 <!-- =================================================================== -->
 <!-- ===================== END OF NAVIGATION SECTION =================== -->
 <!-- =================================================================== -->

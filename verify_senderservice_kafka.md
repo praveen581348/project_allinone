@@ -34,7 +34,7 @@
   <code>I have no name!@kafka-0:/$</code></pre>
    <h3>4️⃣ Consume Messages from Kafka Topic</h3> 
    <p>Inside the Kafka pod shell, run:</p> 
-   <pre><code>kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --from-beginning</code></pre> <p>This will read all messages from the beginning of the topic.</p> 
+   <pre><code>/usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --from-beginning</code></pre> <p>This will read all messages from the beginning of the topic.</p> 
    <p><strong>Expected Output:</strong></p> 
    <pre><code>Hello Kafka!</code></pre> <hr/> 
    <h2>🧠 Behind the Scenes</h2>

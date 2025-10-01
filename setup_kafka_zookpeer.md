@@ -39,8 +39,8 @@ Apache Kafka is a distributed, fault-tolerant event streaming platform. When com
 <h2>🧱 Kafka Architecture Overview</h2>
 <pre>
 +-----------+     +-------------------+     +------------+
-| Producer  | --> |   Kafka Cluster    | --> | Consumer   |
-+-----------+     |  Partitioned Log   |     +------------+
+| Producer  | --> |   Kafka Cluster   | --> | Consumer   |
++-----------+     |   Partitioned Log   |     +------------+
                   +-------------------+
 </pre>
 
@@ -48,15 +48,13 @@ Apache Kafka is a distributed, fault-tolerant event streaming platform. When com
 
 <h2>🗺️ Kafka Cluster Flow</h2>
 
-
-
 <p>
 Kafka topics are split into partitions. Producers send messages to topics, and consumers read from partitions. Zookeeper coordinates the cluster.
 </p>
 
 <hr/>
 
-<h2>🧾 Kubernetes YAML: Kafka + Zookeeper</h2>
+<h2>🧾 Kubernetes YAML: Kafka + Zookeeper (Updated)</h2>
 
 <h3>📁 Namespace</h3>
 <pre><code>apiVersion: v1
@@ -83,12 +81,14 @@ spec:
     spec:
       containers:
         - name: zookeeper
-          image: bitnami/zookeeper:latest
+          image: confluentinc/cp-zookeeper:7.6.0
           ports:
             - containerPort: 2181
           env:
-            - name: ALLOW_ANONYMOUS_LOGIN
-              value: "yes"
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+            - name: ZOOKEEPER_TICK_TIME
+              value: "2000"
 </code></pre>
 
 <h3>📁 Zookeeper Service</h3>
@@ -124,39 +124,49 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: bitnami/kafka:3.5.1
+          image: confluentinc/cp-kafka:7.6.0
           ports:
             - containerPort: 9092
           env:
-            - name: KAFKA_CFG_BROKER_ID
-              value: "0"
-            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KAFKA_BROKER_ID_COMMAND
+              value: "echo ${HOSTNAME##*-}"
+            - name: KAFKA_ZOOKEEPER_CONNECT
               value: zookeeper.messaging.svc.cluster.local:2181
-            - name: KAFKA_CFG_LISTENERS
-              value: PLAINTEXT://:9092
-            - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: PLAINTEXT://kafka.messaging.svc.cluster.local:9092
-            - name: ALLOW_PLAINTEXT_LISTENER
-              value: "yes"
-            - name: KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR
+            - name: KAFKA_LISTENERS
+              value: "PLAINTEXT://:9092"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://$(HOSTNAME).kafka.messaging.svc.cluster.local:9092"
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
               value: "1"
-            - name: KAFKA_KRAFT_MODE
-              value: "false"
+            - name: KAFKA_LOG_DIRS
+              value: "/var/lib/kafka/data"
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: PLAINTEXT
           volumeMounts:
             - name: data
-              mountPath: /bitnami
-      volumes:
-        - name: data
-          emptyDir: {}
+              mountPath: /var/lib/kafka/data
+      volumeClaimTemplates:
+        - metadata:
+            name: data
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 1Gi
 </code></pre>
 
-<h3>📁 Kafka Service</h3>
+<h3>📁 Kafka Service (Headless)</h3>
 <pre><code>apiVersion: v1
 kind: Service
 metadata:
   name: kafka
   namespace: messaging
 spec:
+  clusterIP: None
   ports:
     - port: 9092
       targetPort: 9092
@@ -175,7 +185,7 @@ spec:
 
 <hr/>
 
-<h2>🧪 Kafka CLI Testing</h2>
+<h2>🧪 Kafka CLI Testing (Updated)</h2>
 
 <pre><code># Exec into Kafka pod
 kubectl exec -it -n messaging kafka-0 -- bash
@@ -183,27 +193,27 @@ kubectl exec -it -n messaging kafka-0 -- bash
 
 <ul>
   <li><strong>Create Topic:</strong></li>
-<pre><code>kafka-topics.sh --create \
-  --bootstrap-server localhost:9092 \
-  --replication-factor 1 \
-  --partitions 1 \
-  --topic test-topic
+<pre><code>/usr/bin/kafka-topics --create \
+ --bootstrap-server localhost:9092 \
+ --replication-factor 1 \
+ --partitions 1 \
+ --topic test-topic
 </code></pre>
 
   <li><strong>List Topics:</strong></li>
-<pre><code>kafka-topics.sh --list --bootstrap-server localhost:9092
+<pre><code>/usr/bin/kafka-topics --list --bootstrap-server localhost:9092
 </code></pre>
 
   <li><strong>Produce Messages:</strong></li>
-<pre><code>kafka-console-producer.sh --broker-list localhost:9092 --topic test-topic
+<pre><code>/usr/bin/kafka-console-producer --bootstrap-server localhost:9092 --topic test-topic
 </code></pre>
 
   <li><strong>Consume Messages:</strong></li>
-<pre><code>kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --from-beginning
+<pre><code>/usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --from-beginning
 </code></pre>
 
   <li><strong>Delete Topic:</strong></li>
-<pre><code>kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic test-topic
+<pre><code>/usr/bin/kafka-topics --delete --bootstrap-server localhost:9092 --topic test-topic
 </code></pre>
 </ul>
 
@@ -227,33 +237,25 @@ kubectl exec -it -n messaging kafka-0 -- bash
 
 <h2>📚 Resources</h2>
 <ol>
-  <!-- GitHub Repos & Overviews -->
   <li>📦 <a href="https://github.com/praveen581348/project_allinone" target="_blank">GitHub: project_allinone</a></li>
-   <li>🔁 <a href="https://github.com/praveen581348/project_allinone/blob/master/application_flow.md" target="_blank">Application Flow (GitHub)</a></li>
+    <li>🔁 <a href="https://github.com/praveen581348/project_allinone/blob/master/application_flow.md" target="_blank">Application Flow (GitHub)</a></li>
   <li>📋 <a href="https://github.com/praveen581348/project_allinone/blob/master/SDLC-and-DevOps-Overview.md" target="_blank">SDLC & DevOps Overview</a></li>
   
-  <!-- Docker, Kubernetes, kind -->
   <li>🚀 <a href="https://github.com/praveen581348/project_allinone/blob/master/why_docker_kubernetes_kind.md" target="_blank">Why Docker, Kubernetes & kind?</a></li>
   <li>🔧 <a href="https://github.com/praveen581348/project_allinone/blob/master/why_docker_kubernetes_kind.md" target="_blank">Setup Kind Cluster</a></li>
   <li>🌐 <a href="https://github.com/praveen581348/cluster" target="_blank">Cluster Repository</a></li>
   
-  <!-- Docker -->
   <li>🐳 <a href="https://chatgpt.com/share/6857d18a-a8c0-8001-9c67-850a90e9ddbe" target="_blank">Learn Docker (ChatGPT)</a></li>
   
-  <!-- Kubernetes -->
   <li>☸️ <a href="https://chatgpt.com/share/6857e648-5de0-8001-ab14-7897f0aa5989" target="_blank">Learn Kubernetes (ChatGPT)</a></li>
   
-  <!-- kind -->
   <li>🧪 <a href="https://chatgpt.com/share/6857e7f1-2d24-8001-88c5-41d0bf8c0c51" target="_blank">Learn kind Cluster (ChatGPT)</a></li>
   
-  <!-- Spring Boot + Maven -->
   <li>🛠️ <a href="https://github.com/praveen581348/project_allinone/blob/master/why_springboot_maven.md" target="_blank">Why Spring Boot + Maven?</a></li>
   <li>🌱 <a href="https://chatgpt.com/share/685854c4-f9b4-8001-a16d-bab5320f29d5" target="_blank">Spring Boot Notes & Concepts (ChatGPT)</a></li>
   <li>📘 <a href="https://chatgpt.com/share/6859922a-e6f4-8001-864e-ba59b47ad706" target="_blank">Maven Notes (ChatGPT)</a></li>
   
-  <!-- Kafka + ZooKeeper -->
   <li>📡 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_kafka_zookpeer.md" target="_blank">Setup Kafka & ZooKeeper (GitHub)</a></li>
   <li>📄 <a href="https://chatgpt.com/share/685d3b2e-485c-8001-bc5c-8c3702594e35" target="_blank">Kafka & ZooKeeper Concepts & Architecture (ChatGPT)</a></li>
   <li>📂 <a href="https://github.com/praveen581348/kafka_zookeeper" target="_blank">Kafka & ZooKeeper Repository</a></li>
 </ol>
-
