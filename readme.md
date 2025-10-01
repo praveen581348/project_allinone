@@ -155,7 +155,7 @@
     <ul style="list-style-type: none; padding-left: 20px; margin-top: 10px;">
       <li style="margin-bottom: 10px;">
         <strong style="font-size: 17px;">
-          <a href="https://github.com/praveen581348/project_allinone/blob/master/create_mysql.md" style="text-decoration:none; color:#0366d6;">
+          <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_mysql.md#-what-is-mysql" style="text-decoration:none; color:#0366d6;">
             📌 1.4.1 – Create MySQL Cluster
           </a>
         </strong>

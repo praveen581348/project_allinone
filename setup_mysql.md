@@ -3,7 +3,10 @@
 <h1 align="center" style="color:#2F80ED;">
   🚀 Deploying MySQL on Kind with Persistent Storage
 </h1>
-
+<p align="center">
+  <img src="mysql_arch.png" alt="Spring Boot Architecture" width="600"/>
+  
+</p>
 <p align="center" style="font-size:18px; color:#444;">
   A detailed guide to deploying a MySQL database in a local Kubernetes cluster, ensuring data persistence and network connectivity.
 </p>
@@ -140,7 +143,7 @@ EXIT;</code></pre>
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" target="_blank">Verify SenderService Integration with Kafka</a></li>
 
  <!-- DataBase -->
-   <li>🚀 <a href="https://github.com/praveen581348/project_allinone/blob/master/create_senderservice.md" target="_blank">What's MySQL & Setup MySQL</a></li>
+   <li>🚀 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_mysql.md#-what-is-mysql" target="_blank">What's MySQL & Setup MySQL</a></li>
    <li>📁 <a href="https://github.com/praveen581348/senderservice" target="_blank">What's MongoDB & Setup MySQL</a></li>
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">What's Redis</a></li>
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">Setup Redis</a></li>
