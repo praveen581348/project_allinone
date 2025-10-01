@@ -10,7 +10,7 @@
 
 <hr style="border:1px solid #ddd;"/>
 
-<h2><img src="https://www.mysql.com/common/logos/mysql-logo-95x49.png" alt="MySQL Logo" height="25" style="vertical-align: middle;"/> What is MySQL?</h2>
+<h2><img src="https://www.mysql.com/common/logos/powered-by-mysql-88x31.png" alt="MySQL Logo" height="25" style="vertical-align: middle;"/> What is MySQL?</h2>
 <p>
   <strong>MySQL</strong> is a popular open-source relational database management system (RDBMS) used for storing structured data. It is a critical component for any application that requires data integrity and consistency, making it the perfect choice for our authoritative system of record.
 </p>
@@ -40,7 +40,7 @@
 <h3>1. Kubernetes Manifests</h3>
 <p>We will define our deployment with a dedicated namespace, a PVC, and a combined manifest for the deployment and service.</p>
 
-<h4><img src="https://kubernetes.io/images/favicon.png" alt="Kubernetes Icon" height="18" style="vertical-align: middle;"/> mysql-manifests.yaml</h4> <p>This file contains all the necessary resources for our deployment. It's a best practice to keep related resources in a single manifest for easier management.</p> <pre><code>apiVersion: v1 kind: Namespace metadata:   name: database
+<h4><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/723px-Kubernetes_logo_without_workmark.svg.png" alt="Kubernetes Icon" height="18" style="vertical-align: middle;"/> mysql-manifests.yaml</h4> <p>This file contains all the necessary resources for our deployment. It's a best practice to keep related resources in a single manifest for easier management.</p> <pre><code>apiVersion: v1 kind: Namespace metadata:   name: database
 apiVersion: v1 kind: PersistentVolumeClaim metadata:   name: mysql-pvc   namespace: database spec:   accessModes:     - ReadWriteOnce   resources:     requests:       storage: 1Gi
 apiVersion: apps/v1 kind: Deployment metadata:   name: mysql   namespace: database   labels:     app: mysql spec:   replicas: 1   selector:     matchLabels:       app: mysql   template:     metadata:       labels:         app: mysql     spec:       containers:         - name: mysql           image: mysql:8.0           ports:             - containerPort: 3306           env:             - name: MYSQL_ROOT_PASSWORD               value: "password"           volumeMounts:             - name: mysql-storage               mountPath: /var/lib/mysql       volumes:         - name: mysql-storage           persistentVolumeClaim:             claimName: mysql-pvc
 apiVersion: v1
