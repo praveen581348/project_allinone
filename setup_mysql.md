@@ -144,7 +144,7 @@ EXIT;</code></pre>
 
  <!-- DataBase -->
    <li>🚀 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_mysql.md#-what-is-mysql" target="_blank">What's MySQL & Setup MySQL</a></li>
-   <li>📁 <a href="https://github.com/praveen581348/senderservice" target="_blank">What's MongoDB & Setup MySQL</a></li>
+   <li>📁 <a href="https://github.com/praveen581348/senderservice" target="_blank">What's MongoDB & Setup MongoDB</a></li>
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">What's Redis</a></li>
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">Setup Redis</a></li>
 </ol>
