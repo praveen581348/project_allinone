@@ -1,6 +1,10 @@
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';">
-
+<p align="center">
+  <img src="redis_flow.png"  width="600"/>
+<hr/>
+</p>
+  <hr/>
 <h1 align="center" style="color:#DC3545; border-bottom: 2px solid #ddd; padding-bottom: 10px;">
     🖼️ Visual Explanation: Redis Caching (Cache-Aside Pattern)
 </h1>
@@ -62,7 +66,7 @@
 
 <hr style="border:1px solid #ddd;"/>
 
-<h2><img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Redis_Logo.svg/100px-Redis_Logo.svg.png" alt="Redis Logo" height="25" style="vertical-align: middle;"/> What is Redis?</h2>
+<h2> What is Redis?</h2>
 <p>
     <strong>Redis (REmote DIctionary Server)</strong> is an **open-source, in-memory data structure store**. It serves primarily as a **database**, **cache**, and **message broker**.
 </p>
@@ -97,7 +101,7 @@
 
 <hr style="border:1px dashed #ccc;"/>
 
-<h2><img src="https://img.icons8.com/external-justicon-lineal-color-justicon/64/000000/external-cogs-gear-justicon-lineal-color-justicon.png" alt="How It Works Icon" height="25" style="vertical-align: middle;"/> How Redis Works</h2>
+<h2> How Redis Works</h2>
 <p>
     Redis's speed stems from its **in-memory architecture** and **single-threaded nature**, which minimizes context switching overhead.
 </p>
@@ -147,7 +151,7 @@ OK
 
 <hr style="border:1px dashed #ccc;"/>
 
-<h2><img src="https://img.icons8.com/external-flaticons-lineal-color-flaticons/64/000000/external-code-internet-security-flaticons-lineal-color-flaticons.png" alt="Code Icon" height="25" style="vertical-align: middle;"/> Using Redis with Programming Languages</h2>
+<h2>Using Redis with Programming Languages</h2>
 <p>Redis is compatible with virtually every major programming language through dedicated client libraries.</p>
 
 <h3>1. Python (using <code>redis-py</code>)</h3>
@@ -295,7 +299,7 @@ const developers = await client.sMembers('developers');
 
 <hr style="border:1px dashed #ccc;"/>
 
-<h2><img src="https://img.icons8.com/external-flaticons-lineal-color-flaticons/64/000000/external-code-internet-security-flaticons-lineal-color-flaticons.png" alt="Data Structure Icon" height="25" style="vertical-align: middle;"/> IV. Core Data Structures and Commands</h2>
+<h2>IV. Core Data Structures and Commands</h2>
 <p>Redis is often called a **"data structure server"** due to its versatility.</p>
 
 <h3>1. Strings (Simple Key-Value)</h3>
@@ -337,7 +341,7 @@ const developers = await client.sMembers('developers');
 
 <hr style="border:1px dashed #ccc;"/>
 
-<h2><img src="https://img.icons8.com/flat-round-color/64/000000/star-filled.png" alt="Star Icon" height="25" style="vertical-align: middle;"/> V. Advanced Features</h2>
+<h2> V. Advanced Features</h2>
 
 <ul>
     <li>**Streams:** An append-only log for high-throughput, fast-moving data (Event Sourcing, Sensor Monitoring). Insertion is **O(1)**.</li>
