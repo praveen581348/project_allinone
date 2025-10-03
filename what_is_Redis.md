@@ -218,7 +218,7 @@ const developers = await client.sMembers('developers');
 
 </div>
 
-```html
+
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';">
 
 <h1 align="center" style="color:#DC3545; border-bottom: 3px solid #DC3545; padding-bottom: 10px;">
