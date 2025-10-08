@@ -44,7 +44,7 @@
     <h2>🧪 Extra Tips</h2> <ul> <li>Press <code>Ctrl + C</code> to exit the Kafka consumer</li> <li>Type <code>exit</code> to leave the Kafka pod shell</li> <li>Use <code>kubectl logs -n messaging kafka-0</code> to view Kafka logs</li> </ul> <hr/>
     <h2>📚 Related Resources</h2> <ul> <li>📘 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_kafka_zookpeer.md" target="_blank">Kafka + Zookeeper Setup</a></li> <li>🌼 <a href="https://github.com/praveen581348/project_allinone/blob/master/sendservice_overview.md" target="_blank">SenderService Spring Boot App</a></li> </ul> 
 
-    <h2>📚 Resources</h2>
+   <h2>📚 Resources</h2>
 <ol>
   <!-- GitHub Repos & Overviews -->
   <li>📦 <a href="https://github.com/praveen581348/project_allinone" target="_blank">GitHub: project_allinone</a></li>
@@ -81,6 +81,18 @@
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">Run SenderService as a Pod (Kubernetes Deployment Guide)</a></li>
     <li>✅ <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" target="_blank">Verify SenderService Producing to Kafka</a></li>
 
+    <!-- MySQL -->
+  <li>🗄️ <a href="github.com/praveen581348/project_allinone/blob/master/setup_mysql.md" target="_blank">Setup MySQL User Guide</a></li>
+  <li>💾 <a href="https://github.com/praveen581348/mysql" target="_blank">MySQL Repository</a></li>
+
+  <!-- Redis -->
+  <li>⚡ <a href="https://github.com/praveen581348/project_allinone/blob/master/what_is_Redis.md" target="_blank">What is Redis?</a></li>
+  <li>🔴 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_redis_guide.md" target="_blank">Setup Redis Guide</a></li>
+  <li>📚 <a href="https://github.com/praveen581348/redis" target="_blank">Redis Repository</a></li>
+
+  <!-- MongoDB -->
+  <li>🍃 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_mongodb.md" target="_blank">MongoDB Setup Guide</a></li>
+  <li>🧩 <a href="https://github.com/praveen581348/mongodb" target="_blank">MongoDB Repository</a></li>
+
+
 </ol>
-
-
