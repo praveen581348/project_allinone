@@ -321,7 +321,7 @@
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">Run SenderService as a Pod (Kubernetes Deployment Guide)</a></li>
     <li>✅ <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" target="_blank">Verify SenderService Producing to Kafka</a></li>
 
-    <!-- MySQL -->
+  <!-- MySQL -->
   <li>🗄️ <a href="github.com/praveen581348/project_allinone/blob/master/setup_mysql.md" target="_blank">Setup MySQL User Guide</a></li>
   <li>💾 <a href="https://github.com/praveen581348/mysql" target="_blank">MySQL Repository</a></li>
 
@@ -333,6 +333,16 @@
   <!-- MongoDB -->
   <li>🍃 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_mongodb.md" target="_blank">MongoDB Setup Guide</a></li>
   <li>🧩 <a href="https://github.com/praveen581348/mongodb" target="_blank">MongoDB Repository</a></li>
+
+<!-- ReceiverService -->
+  <li>📩 <a href="https://github.com/praveen581348/project_allinone/blob/master/create_receiverservice.md" target="_blank">Create ReceiverService – Spring Boot Kafka Consumer</a></li>
+  <li>📂 <a href="https://github.com/praveen581348/receiverservice" target="_blank">ReceiverService Git Repository</a></li>
+  <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_receiver_pod.md" target="_blank">Run ReceiverService as a Pod (Kubernetes Deployment Guide)</a></li>
+  <li>✅ <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_receiver.md" target="_blank">Verify ReceiverService Consuming from Kafka</a></li>
+
+  <!-- DataService -->
+  <li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_dataservice.md" target="_blank">Create DataService – Database Integration Service,Run as Podn and Verify</a></li>
+  <li>🗃️ <a href="https://github.com/praveen581348/dataservice" target="_blank">DataService Git Repository</a></li>
 
 
 </ol>
