@@ -293,7 +293,7 @@
   
   <!-- Docker, Kubernetes, kind -->
   <li>🚀 <a href="https://github.com/praveen581348/project_allinone/blob/master/why_docker_kubernetes_kind.md" target="_blank">Why Docker, Kubernetes & kind?</a></li>
-  <li>🔧 <a href="https://github.com/praveen581348/project_allinone/blob/master/why_docker_kubernetes_kind.md" target="_blank">Setup Kind Cluster</a></li>
+  <li>🔧 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_cluster.md" target="_blank">Setup Kind Cluster</a></li>
   <li>🌐 <a href="https://github.com/praveen581348/cluster" target="_blank">Cluster Repository</a></li>
   
   <!-- Docker -->
@@ -320,6 +320,7 @@
    <li>📁 <a href="https://github.com/praveen581348/senderservice" target="_blank">SenderService Git Repository</a></li>
     <li>📦 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_senderservice_as_pod.md" target="_blank">Run SenderService as a Pod (Kubernetes Deployment Guide)</a></li>
     <li>✅ <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_senderservice_kafka.md" target="_blank">Verify SenderService Producing to Kafka</a></li>
+    <li>✅ <a href="https://github.com/praveen581348/project_allinone/blob/master/SenderService_HelmConversion.md" target="_blank"> SenderService Helm Conversion</a></li>
 
   <!-- MySQL -->
   <li>🗄️ <a href="github.com/praveen581348/project_allinone/blob/master/setup_mysql.md" target="_blank">Setup MySQL User Guide</a></li>
@@ -327,7 +328,7 @@
 
   <!-- Redis -->
   <li>⚡ <a href="https://github.com/praveen581348/project_allinone/blob/master/what_is_Redis.md" target="_blank">What is Redis?</a></li>
-  <li>🔴 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_redis_guide.md" target="_blank">Setup Redis Guide</a></li>
+  <li>🔴 <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_redis.md" target="_blank">Setup Redis Guide</a></li>
   <li>📚 <a href="https://github.com/praveen581348/redis" target="_blank">Redis Repository</a></li>
 
   <!-- MongoDB -->
@@ -341,8 +342,26 @@
   <li>✅ <a href="https://github.com/praveen581348/project_allinone/blob/master/verify_receiver.md" target="_blank">Verify ReceiverService Consuming from Kafka</a></li>
 
   <!-- DataService -->
-  <li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_dataservice.md" target="_blank">Create DataService – Database Integration Service,Run as Podn and Verify</a></li>
+  <li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/run_dataservice.md" target="_blank">Create DataService – Database Integration Service,Run as Pod and Verify</a></li>
   <li>🗃️ <a href="https://github.com/praveen581348/dataservice" target="_blank">DataService Git Repository</a></li>
 
+<!-- Nexus -->
+<li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/learn_nexus.md" target="_blank">Learn Nexus</a></li>
+  <li>🗃️ <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_nexus.md" target="_blank">SetUp Nexus</a></li>
+  <li>🗃️ <a href="https://github.com/praveen581348/nexus" target="_blank">Nexus Git Repository</a></li>
 
+<!-- SonarQube -->
+<li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/learn_sonarqube.md" target="_blank">Learn Nexus</a></li>
+  <li>🗃️ <a href="https://github.com/praveen581348/project_allinone/blob/master/setup_sonarqube.md" target="_blank">SetUp Nexus</a></li>
+  <li>🗃️ <a href="https://github.com/praveen581348/sonarqube" target="_blank">Nexus Git Repository</a></li>
+
+  <!-- Prometheus and Grafana -->
+<li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/learn_implement_promethesus_grafana.md" target="_blank">Learn Implement Prometheus Grafana</a></li>
+  <li>🗃️ <a href="https://github.com/praveen581348/prometheus_grafana" target="_blank">Prometheus Grafana Git Repository</a></li>
+
+<!-- Jenkins-->
+<li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/Learn_jenkins.md" target="_blank">Learn Jenkins</a></li>
+<li>🗃️ <a href="https://github.com/praveen581348/jenkins" target="_blank">Jenkins Repository</a></li>
+
+  
 </ol>
