@@ -509,3 +509,180 @@ kind delete cluster --name demo
 <hr/>
 <hr/>
 
+<!-- 🧾 Jenkins Freestyle Job Documentation -->
+
+<h1 align="center">🚀 Jenkins Lab Notes: Phase 1.3 - SenderService Freestyle Pipeline</h1>
+
+<p align="center">
+  <b>Automating: Checkout → Maven Build → Docker Package</b><br>
+  <i>Comprehensive step-by-step guide for the Sender Service CI process</i>
+</p>
+
+---
+
+<h2>📝 Goal</h2>
+
+<p>
+To create a <b>Freestyle project</b> in Jenkins that automates the <b>Checkout → Build (Maven) → Package (Docker)</b> process for the <code>senderservice</code> Spring Boot application.
+</p>
+
+---
+
+<h2>🔐 Step 1: Configure Docker Hub Credentials</h2>
+
+<ol>
+  <li>Go to <b>Manage Jenkins → Credentials</b>.</li>
+  <li>Under <b>Stores scoped to Jenkins</b>, click <b>(Global)</b>.</li>
+  <li>Click <b>Add Credentials</b>.</li>
+  <li><b>Kind:</b> Username with password</li>
+  <li><b>Username:</b> <code>praveen581348</code></li>
+  <li><b>Password:</b> Docker Hub password or access token</li>
+  <li><b>ID:</b> <code>dockerhub-creds</code></li>
+  <li>Click <b>OK</b>.</li>
+</ol>
+
+<blockquote>
+<b>💡 Study Note:</b> The <code>ID</code> is a unique label we’ll use in Jenkins jobs to reference these credentials safely.
+</blockquote>
+
+---
+
+<h2>⚙️ Step 2: Job Creation & Configuration</h2>
+
+<h3>2.1 ➤ Create New Item</h3>
+
+<ol>
+  <li>From the Jenkins dashboard, click <b>New Item</b>.</li>
+  <li>Enter item name: <code>SenderService-Freestyle-Deploy</code></li>
+  <li>Select <b>Freestyle project</b>.</li>
+  <li>Click <b>OK</b>.</li>
+</ol>
+
+---
+
+<h3>2.2 📋 General Section</h3>
+
+<ul>
+  <li><b>Description:</b> “Freestyle job to build, package, and deploy the senderservice Spring Boot application.”</li>
+  <li><b>Discard Old Builds:</b> Check this box and set <b>Max # of builds to keep</b> = <code>20</code>.</li>
+</ul>
+
+<blockquote>
+🧠 <b>Note:</b> This keeps Jenkins clean by removing old build logs and artifacts.
+</blockquote>
+
+---
+
+<h3>2.3 📁 Source Code Management (SCM)</h3>
+
+<ul>
+  <li><b>SCM:</b> Select <b>Git</b>.</li>
+  <li><b>Repository URL:</b> <code>https://github.com/praveen581348/senderservice.git</code></li>
+  <li><b>Credentials:</b> None (public repo).</li>
+  <li><b>Branches to build:</b> <code>*/main</code></li>
+</ul>
+
+---
+
+<h3>2.4 ⏰ Build Triggers</h3>
+
+<ul>
+  <li><b>Option Used:</b> <code>Poll SCM</code></li>
+  <li><b>Schedule:</b> <code>H/5 * * * *</code></li>
+</ul>
+
+<blockquote>
+🔄 This means Jenkins checks for new commits every 5 minutes and builds automatically if it detects changes.
+</blockquote>
+
+---
+
+<h3>2.5 🌳 Build Environment</h3>
+
+<ul>
+  <li><b>Delete workspace before build starts:</b> Ensures clean build environment.</li>
+  <li><b>Use secret text(s) or file(s):</b> Provides Docker Hub credentials securely.</li>
+</ul>
+
+<h4>🧩 Credential Mapping:</h4>
+
+<table border="1" cellpadding="4">
+<tr><th>Variable</th><th>Value</th></tr>
+<tr><td><code>DOCKER_USER</code></td><td>Docker Hub username</td></tr>
+<tr><td><code>DOCKER_PASS</code></td><td>Docker Hub password (masked)</td></tr>
+<tr><td><code>Credentials ID</code></td><td><code>dockerhub-creds</code></td></tr>
+</table>
+
+---
+
+<h3>2.6 🏗️ Build Steps</h3>
+
+<h4>Step 1: Maven Build</h4>
+
+```bash
+echo "--- 1. BUILDING MAVEN ARTIFACT ---"
+
+# Use -DskipTests for speed; in production, run tests
+mvn clean package -DskipTests
+
+echo "Maven build complete. JAR is in /target directory."
+```
+
+<h4>Step 2: Docker Build</h4>
+
+```bash
+echo "--- 2. BUILDING DOCKER IMAGE ---"
+
+# Unique tag for traceability
+export IMAGE_TAG="praveen581348/senderservice:${BUILD_NUMBER}"
+
+echo "Building image: $IMAGE_TAG"
+
+docker build -t $IMAGE_TAG .
+
+echo "Docker build complete."
+```
+
+---
+
+<h2>🚀 Step 3: Running and Verifying the Build</h2>
+
+<ol>
+  <li>Click <b>Build Now</b> on job dashboard.</li>
+  <li>Open <b>Console Output</b> from Build #1.</li>
+</ol>
+
+<h4>✅ Expected Output:</h4>
+
+```bash
+...
+#1 [internal] load build definition from Dockerfile
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:17-jdk-jammy
+...
+#6 [2/2] COPY target/*.jar app.jar
+#7 exporting to image
+#7 naming to docker.io/praveen581348/senderservice:1
+...
+Finished: SUCCESS
+```
+
+---
+
+<h2 align="center">🎯 Summary</h2>
+
+<p align="center">
+✅ Freestyle job created successfully<br>
+✅ Automated Maven & Docker build pipeline<br>
+✅ Credentials securely managed<br>
+✅ Ready for next phase: <b>Docker Push + Helm Deploy</b>
+</p>
+
+---
+
+<h3 align="center">📘 Author</h3>
+
+<p align="center">
+<b>Praveen</b> — Jenkins Freestyle Lab Documentation  
+<small>Generated and verified with <code>Jenkins v2.x</code> and <code>Docker v24.x</code></small>
+</p>
+<hr/>
