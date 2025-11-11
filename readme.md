@@ -360,7 +360,7 @@
   <li>🗃️ <a href="https://github.com/praveen581348/prometheus_grafana" target="_blank">Prometheus Grafana Git Repository</a></li>
 
 <!-- Jenkins-->
-<li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/Learn_jenkins.md" target="_blank">Learn Jenkins</a></li>
+<li>🧠 <a href="https://github.com/praveen581348/project_allinone/blob/master/Learn_jenkins.md" target="_blank">Learn Jenkins and Implement</a></li>
 <li>🗃️ <a href="https://github.com/praveen581348/jenkins" target="_blank">Jenkins Repository</a></li>
 
   
