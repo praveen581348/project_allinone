@@ -686,3 +686,132 @@ Finished: SUCCESS
 <small>Generated and verified with <code>Jenkins v2.x</code> and <code>Docker v24.x</code></small>
 </p>
 <hr/>
+
+# 🚀 Jenkins Freestyle Job — The Annotated DevOps Guide
+
+> **Purpose:**  
+> This guide breaks down every section of a Jenkins Freestyle project configuration page — not just *what* to click, but *why* each option exists and when to actually use it.  
+> Perfect for DevOps engineers learning Jenkins hands-on.
+
+<hr>
+
+<h2 style="color:#2d89ef;">1️⃣ General Section</h2>
+<p>Defines the high-level behavior, metadata, and characteristics of your Jenkins job.</p>
+
+<h3>🧩 Description</h3>
+<ul>
+<li><b>What:</b> A simple text box.</li>
+<li><b>Why:</b> Use this to describe what the job does, who owns it, and its purpose.</li>
+<li><b>Tip:</b> You can use <b>HTML</b> here.</li>
+</ul>
+
+<pre><code class="language-html">
+<p><b>Service:</b> Sender Service</p>
+<p><b>Purpose:</b> Builds & packages the Sender microservice Docker image</p>
+<p><b>Owner:</b> DevOps Team</p>
+</code></pre>
+
+<h3>🧹 Discard Old Builds</h3>
+<ul>
+<li><b>Why:</b> Prevents Jenkins from filling its disk with logs and artifacts.</li>
+<li><b>Recommended:</b> Always enable this option. Keep last <code>20</code> builds or <code>7</code> days.</li>
+</ul>
+
+<p><i>💡 Jenkins is not an artifact repository — use Nexus or Artifactory for long-term storage.</i></p>
+
+<hr>
+
+<h2 style="color:#00b050;">2️⃣ Source Code Management (SCM)</h2>
+<p>Defines where the source code comes from.</p>
+
+<h3>🧭 Git</h3>
+<table>
+<tr><th>Field</th><th>Description</th></tr>
+<tr><td>Repository URL</td><td>HTTPS/SSH URL of the repo</td></tr>
+<tr><td>Credentials</td><td>Select from stored Jenkins credentials</td></tr>
+<tr><td>Branches to Build</td><td>Example: <code>*/main</code> or <code>*/feature-*</code></td></tr>
+<tr><td>Repository Browser</td><td>Choose <code>githubweb</code> for clickable commit links</td></tr>
+</table>
+
+<p>You can also parameterize it using <code>${GIT_BRANCH}</code>.</p>
+
+<hr>
+
+<h2 style="color:#ff9900;">3️⃣ Build Triggers</h2>
+<p>Defines <b>when</b> and <b>why</b> your job runs.</p>
+
+<ul>
+<li><b>Trigger builds remotely:</b> Generates a tokenized URL to trigger builds externally.</li>
+<li><b>Build periodically:</b> Cron-based schedules. Example: <code>H 0 * * *</code></li>
+<li><b>GitHub hook trigger:</b> Event-driven webhook for push notifications.</li>
+<li><b>Poll SCM:</b> Polls repository at intervals (less efficient).</li>
+</ul>
+
+<hr>
+
+<h2 style="color:#7030a0;">4️⃣ Build Environment</h2>
+<p>Defines the context before build steps run.</p>
+
+<ul>
+<li><b>Delete workspace before build:</b> Ensures clean workspace each time.</li>
+<li><b>Use secret text(s)/file(s):</b> Securely inject credentials like DockerHub login.</li>
+<li><b>Add timestamps:</b> Useful for debugging build performance.</li>
+<li><b>Terminate build if stuck:</b> Prevent infinite hanging jobs.</li>
+</ul>
+
+<pre><code class="language-bash">
+docker login -u $DOCKER_USER -p $DOCKER_PASS
+</code></pre>
+
+<hr>
+
+<h2 style="color:#c00000;">5️⃣ Build Steps</h2>
+<p>The core actions your job executes.</p>
+
+<ul>
+<li><b>Execute Shell:</b> Generic shell script execution.</li>
+<li><b>Invoke Maven Targets:</b> Integrated Maven execution with test parsing.</li>
+</ul>
+
+<pre><code class="language-bash">
+echo "Building Sender Service..."
+mvn clean package -DskipTests
+docker build -t sender-service:latest .
+</code></pre>
+
+<hr>
+
+<h2 style="color:#1f4e79;">6️⃣ Post-Build Actions</h2>
+<p>Defines what happens after the build completes.</p>
+
+<ul>
+<li><b>Archive artifacts:</b> Preserve build outputs like <code>target/*.jar</code>.</li>
+<li><b>Publish JUnit test results:</b> Parse and visualize <code>target/surefire-reports/*.xml</code>.</li>
+<li><b>Build other projects:</b> Chain dependent jobs (e.g., deploy after build).</li>
+<li><b>Email notifications:</b> Notify commit authors on failures.</li>
+<li><b>Delete workspace:</b> Clean up after successful builds.</li>
+</ul>
+
+<hr>
+
+<h2 style="color:#4bacc6;">✅ Best Practices Summary</h2>
+
+<table>
+<tr><th>Area</th><th>Recommendation</th></tr>
+<tr><td>Cleanup</td><td>Always discard old builds</td></tr>
+<tr><td>Triggers</td><td>Prefer GitHub Webhook over Poll SCM</td></tr>
+<tr><td>Credentials</td><td>Inject securely using Jenkins credentials</td></tr>
+<tr><td>Artifacts</td><td>Archive all critical files</td></tr>
+<tr><td>Logs</td><td>Enable timestamps</td></tr>
+<tr><td>Concurrency</td><td>Disable unless isolated</td></tr>
+<tr><td>Timeout</td><td>Set reasonable limits</td></tr>
+</table>
+
+<hr>
+
+<p><b>Author:</b> DevOps Jenkins Lab Notes<br>
+<b>Version:</b> 1.0<br>
+<b>License:</b> Internal Knowledgebase</p>
+<hr/>
+<hr/>
+
