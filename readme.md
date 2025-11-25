@@ -300,7 +300,7 @@
   <li>🐳 <a href="https://chatgpt.com/share/6857d18a-a8c0-8001-9c67-850a90e9ddbe" target="_blank">Learn Docker (ChatGPT)</a></li>
   
   <!-- Kubernetes -->
-  <li>☸️ <a href="https://chatgpt.com/share/6857e648-5de0-8001-ab14-7897f0aa5989" target="_blank">Learn Kubernetes (ChatGPT)</a></li>
+  <li>☸️ <a href="https://chatgpt.com/share/6925d936-7094-800b-bb2f-f5c559c04d30" target="_blank">Learn Kubernetes (ChatGPT)</a></li>
   
   <!-- kind -->
   <li>🧪 <a href="https://chatgpt.com/share/6857e7f1-2d24-8001-88c5-41d0bf8c0c51" target="_blank">Learn kind Cluster (ChatGPT)</a></li>
