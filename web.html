@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Cluster Kubernetes Infrastructure Project</title>
+    <style>
+        /* Modern CSS for an interactive and rich experience */
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+        header p {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        /* Tab Navigation Styles */
+        .tabs-nav {
+            display: flex;
+            background-color: #ecf0f1;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        .tab-button {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #7f8c8d;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            outline: none;
+        }
+        .tab-button:hover {
+            color: #3498db;
+            background-color: #eef2f3;
+        }
+        .tab-button.active {
+            color: #2c3e50;
+            border-bottom-color: #3498db;
+            background-color: #fff;
+        }
+        /* Tab Content Styles */
+        .tab-content {
+            display: none;
+            padding: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Content Styles */
+        h2 { font-size: 1.8rem; border-left: 5px solid #3498db; padding-left: 1rem; margin-top: 2.5rem; color: #2c3e50; }
+        h3 { font-size: 1.4rem; color: #34495e; margin-top: 1.8rem; }
+        .intro-box { background-color: #e8f4fd; border: 1px solid #b3d8f4; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+        .command-block { position: relative; background-color: #2d3436; color: #dfe6e9; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0; font-family: 'Consolas', monospace; }
+        .command-block pre { margin: 0; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background-color: #0984e3; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: background-color 0.3s ease; opacity: 0; }
+        .command-block:hover .copy-btn { opacity: 1; }
+        .copy-btn:hover { background-color: #00cec9; }
+        .copy-btn.copied { background-color: #00b894; }
+        .note-box { padding: 1rem 1.5rem; border-radius: 6px; margin: 1.5rem 0; border-left: 5px solid; }
+        .crucial { background-color: #ffeaa7; border-color: #fdcb6e; }
+        .important { background-color: #fab1a0; border-color: #e17055; color: #632f2f; }
+        .pro-tip { background-color: #dff9fb; border-color: #81ecec; }
+        .summary-box { background-color: #55efc4; color: #2d3436; padding: 2rem; border-radius: 8px; margin-top: 3rem; text-align: center; }
+        .summary-box h2 { border-left: none; padding-left: 0; margin-top: 0; }
+        .summary-box ul { display: inline-block; text-align: left; margin-top: 1rem; }
+        .next-step { margin-top: 1.5rem; font-size: 1.2rem; font-weight: bold; color: #0984e3; }
+        .git-repo-link { display: inline-block; background-color: #24292e; color: white; padding: 0.8rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s; }
+        .git-repo-link:hover { background-color: #4078c0; }
+        .git-repo-section { text-align: center; margin: 2rem 0; padding: 2rem; background-color: #f0f0f0; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>Multi-Cluster Kubernetes Infrastructure Project</h1>
+            <p>From Infrastructure Setup to Multi-Cluster GitOps Platform</p>
+        </header>
+
+        <div class="tabs-nav">
+            <button class="tab-button active" onclick="openTab(event, 'step1')">Step 1: Infrastructure Setup</button>
+            </div>
+
+        <div id="step1" class="tab-content active">
+            <div class="intro-box">
+                <p>This is an excellent start to your multi-cluster journey! You are defining a very clear boundary between your <strong>Platform</strong> (management tools) and your <strong>Workload</strong> (application environments: Dev & Prod). This "Hub-and-Spoke" architecture is a standard practice for scalable and secure Kubernetes deployments.</p>
+                <p>Here is a detailed guide and set of notes for <strong>Step 1: Infrastructure Setup</strong>, covering the creation of your three Kind clusters, persistent storage configuration, and how to manage multiple cluster contexts with <code>kubectl</code>.</p>
+            </div>
+
+            <h2>1. Architectural Overview & Cluster Purpose</h2>
+            <p>We are establishing a three-cluster topology to separate concerns:</p>
+            <ol>
+                <li><strong>Platform Cluster (<code>platform</code>):</strong> The central management plane. It hosts shared DevOps tools (Jenkins, Nexus, SonarQube, etc.) and is not exposed to application traffic.</li>
+                <li><strong>Development Cluster (<code>dev</code>):</strong> The target for active development and integration testing. It runs the latest versions of your microservices and databases.</li>
+                <li><strong>Production Cluster (<code>prd</code>):</strong> The stable, live environment. It hosts the production-ready versions of your services.</li>
+            </ol>
+
+            <h3>Key Configuration Strategies</h3>
+            <ul>
+                <li><strong>Host Port Mapping:</strong> Each cluster has distinct <code>hostPort</code> mappings in its control plane node. This allows you to access services in different clusters from your local machine (WSL/Windows) without port conflicts.
+                    <ul>
+                        <li><strong>Platform:</strong> Ports like 30080, 30081, etc.</li>
+                        <li><strong>Dev:</strong> Ports like 30084, 30098, etc.</li>
+                        <li><strong>Prod:</strong> Ports like 32000, 32001, etc.</li>
+                    </ul>
+                </li>
+                <li><strong>Persistent Storage (<code>extraMounts</code>):</strong> Each cluster mounts a dedicated directory from your WSL host machine into its nodes at <code>/mnt/data</code> or <code>/mnt/app-data</code>.
+                    <ul>
+                        <li><strong>Platform:</strong> Maps <code>~/platform-data</code> $\rightarrow$ <code>/mnt/data</code></li>
+                        <li><strong>Dev:</strong> Maps <code>~/application_data</code> $\rightarrow$ <code>/mnt/app-data</code></li>
+                        <li><strong>Prod:</strong> Maps <code>~/prd_application_data</code> $\rightarrow$ <code>/mnt/app-data</code></li>
+                    </ul>
+                    <div class="note-box crucial">
+                        <strong>Crucial:</strong> This ensures that data for databases, Jenkins, and Nexus survives cluster restarts or rebuilds.
+                    </div>
+                </li>
+            </ul>
+
+            <h2>2. Git Repository for Configuration</h2>
+            <div class="git-repo-section">
+                <p>All cluster configuration YAML files (<code>platform_cluster.yaml</code>, <code>dev_cluster.yaml</code>, <code>prd_Cluster.yaml</code>) are available in the following GitHub repository:</p>
+                <a href="https://github.com/praveen581348/cluster.git" target="_blank" class="git-repo-link">
+                    👉 Go to GitHub Repo: praveen581348/cluster
+                </a>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Clone this repository to your local machine to get started.</p>
+            </div>
+
+            <h2>3. Setup Commands</h2>
+            <p>Run these commands sequentially in your WSL terminal.</p>
+
+            <h3>3.1. Prepare Persistent Storage Directories</h3>
+            <p>First, create the required directories on your WSL host and set permissions to ensure the containers can read and write to them.</p>
+            <div class="command-block">
+                <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                <pre><code># --- 1. PLATFORM DATA (Jenkins, Nexus, SonarQube, etc.) ---
+mkdir -p ~/platform-data/{grafana,jenkins,nexus,prometheus,sonarqube}
+# Set full permissions for simplicity in a lab environment
+sudo chmod -R 777 ~/platform-data
+
+# --- 2. DEV APPLICATION DATA (Databases, Kafka, etc.) ---
+mkdir -p ~/application_data/{mysql,mongodb,redis,kafka,zookeeper,rabbitmq,sender,receiver}
+sudo chmod -R 777 ~/application_data
+
+# --- 3. PROD APPLICATION DATA (Databases, Kafka, etc.) ---
+mkdir -p ~/prd_application_data/{mysql,mongodb,redis,kafka,zookeeper,rabbitmq,sender,receiver}
+sudo chmod -R 777 ~/prd_application_data
+
+echo "✅ Persistent storage directories created and configured."</code></pre>
+            </div>
+
+            <h3>3.2. Create the Clusters</h3>
+            <p>Use the YAML files you've prepared to create each cluster. Kind will automatically merge the new cluster's context into your <code>~/.kube/config</code> file.</p>
+            <div class="note-box important">
+                <strong>Important:</strong> Make sure you are in the directory containing your <code>.yaml</code> config files (e.g., inside your cloned cluster git repo).
+            </div>
+            <div class="command-block">
+                <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                <pre><code># --- 1. CREATE PLATFORM CLUSTER ---
+kind create cluster --config platform_cluster.yaml --name platform
+
+# --- 2. CREATE DEV CLUSTER ---
+kind create cluster --config dev_cluster.yaml --name dev
+
+# --- 3. CREATE PROD CLUSTER ---
+kind create cluster --config prd_Cluster.yaml --name prd
+
+echo "✅ All three clusters (platform, dev, prd) have been successfully created."</code></pre>
+            </div>
+
+            <h2>4. Managing Multiple Clusters with <code>kubectl</code></h2>
+            <p>When you work with multiple clusters, <code>kubectl</code> needs to know which one to send commands to. This is managed through <strong>contexts</strong> stored in your Kubeconfig file.</p>
+
+            <h3>4.1. Understanding <code>~/.kube/config</code></h3>
+            <p>Your <code>~/.kube/config</code> file is a YAML file that stores authentication information for all your Kubernetes clusters. It holds three key concepts:</p>
+            <ul>
+                <li><strong>Clusters:</strong> Details about the cluster itself (server API URL, CA certificate).</li>
+                <li><strong>Users:</strong> Credentials for authenticating to a cluster (client certificates, tokens).</li>
+                <li><strong>Contexts:</strong> A triplet that ties together a <strong>Cluster</strong>, a <strong>User</strong>, and optionally a default <strong>Namespace</strong>. It basically says: <em>"Use User X credentials to talk to Cluster Y, and default to Namespace Z."</em></li>
+            </ul>
+            <p>When you run <code>kind create cluster --name mycluster</code>, Kind automatically:</p>
+            <ul>
+                <li>Creates a new user/credential pair.</li>
+                <li>Creates a new cluster entry pointing to the local Kind control plane.</li>
+                <li>Creates a new context named <code>kind-mycluster</code> that links them.</li>
+                <li>Sets this new context as the <strong>current-context</strong>.</li>
+            </ul>
+            <p>You can view your config file with: <code>kubectl config view</code></p>
+
+            <h3>4.2. Switching Contexts</h3>
+            <p>Use the following commands to list and switch between your cluster contexts.</p>
+
+            <h4>1. List Available Contexts:</h4>
+            <p>This will show all clusters <code>kubectl</code> knows about. The one with the <code>*</code> star is the currently active one.</p>
+            <div class="command-block">
+                <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                <pre><code>kubectl config get-contexts</code></pre>
+            </div>
+            <p><strong>Output (Example):</strong></p>
+            <div class="command-block" style="background-color: #f0f0f0; color: #333;">
+                <pre><code>CURRENT   NAME            CLUSTER         AUTHINFO        NAMESPACE
+          kind-dev        kind-dev        kind-dev
+          kind-platform   kind-platform   kind-platform
+* kind-prd        kind-prd        kind-prd</code></pre>
+            </div>
+
+            <h4>2. Switch to the 'Platform' Cluster:</h4>
+            <p>To run commands against your Platform cluster (e.g., to install Jenkins), switch the context.</p>
+            <div class="command-block">
+                <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                <pre><code>kubectl config use-context kind-platform
+# Verify connection
+kubectl get nodes</code></pre>
+            </div>
+
+            <h4>3. Switch to the 'Dev' Cluster:</h4>
+            <p>To run commands against your Dev cluster (e.g., to deploy your microservices), switch the context.</p>
+            <div class="command-block">
+                <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                <pre><code>kubectl config use-context kind-dev
+# Verify connection
+kubectl get nodes</code></pre>
+            </div>
+
+            <h4>4. Switch to the 'Prod' Cluster:</h4>
+            <div class="command-block">
+                <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                <pre><code>kubectl config use-context kind-prd
+# Verify connection
+kubectl get nodes</code></pre>
+            </div>
+
+            <div class="note-box pro-tip">
+                <strong>Pro Tip:</strong> For easier context switching, you can install a tool called <code>kubectx</code>. It allows you to switch contexts interactively with <code>kubectx</code> and switch back to the previous context with <code>kubectx -</code>.
+            </div>
+
+            <div class="summary-box">
+                <h2>✅ Summary of Step 1</h2>
+                <p>You have successfully:</p>
+                <ul>
+                    <li>Defined the architecture for a robust, multi-cluster Kubernetes environment.</li>
+                    <li>Prepared host-based persistent storage for all clusters.</li>
+                    <li>Created the <code>platform</code>, <code>dev</code>, and <code>prd</code> clusters using Kind.</li>
+                    <li>Learned how to view and switch between cluster contexts using <code>kubectl</code>.</li>
+                </ul>
+                <p class="next-step">You are now ready to proceed to Step 2: Setting up the Platform Cluster.</p>
+            </div>
+        </div>
+
+        </div>
+
+<script>
+    // Tab switching logic
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        
+        // Hide all tab content
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].className = tabcontent[i].className.replace(" active", "");
+        }
+
+        // Remove "active" class from all tab buttons
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the specific tab content and mark button as active
+        document.getElementById(tabName).className += " active";
+        evt.currentTarget.className += " active";
+    }
+
+    // Copy to clipboard logic
+    function copyCommand(btn) {
+        const pre = btn.nextElementSibling;
+        const code = pre.querySelector('code');
+        const text = code.innerText;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        }, (err) => {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+
+</body>
+</html>
