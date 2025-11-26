@@ -815,3 +815,427 @@ docker build -t sender-service:latest .
 <hr/>
 <hr/>
 
+# 🧾 Jenkins Freestyle Job — Secure DockerHub Push (Two-Step Process)
+
+<hr>
+
+<h2>Step 1️⃣: Create Global Credentials</h2>
+
+<ul>
+<li>Navigate to <b>Manage Jenkins → Credentials</b>.</li>
+<li>Add a new <b>Username with Password</b> credential.</li>
+<li>Save it with <b>ID:</b> <code>dockerhub-creds</code>.</li>
+<li>This securely stores your DockerHub login.</li>
+</ul>
+
+<hr>
+
+<h2>Step 2️⃣: Bind Credentials to Environment Variables</h2>
+
+<p>In your <b>SenderService-Freestyle-Deploy</b> job:</p>
+
+<ol>
+<li>Go to <b>Configure → Build Environment</b>.</li>
+<li>Check ✅ <b>Use secret text(s) or file(s)</b>.</li>
+<li>Click <b>Add → Username and password (separated)</b>.</li>
+<li>Fill in the fields as shown below:</li>
+</ol>
+
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><th>Field</th><th>Value</th><th>Purpose</th></tr>
+<tr><td><b>Credentials</b></td><td><code>praveen581348/dockerhub-creds</code></td><td>Uses stored DockerHub login</td></tr>
+<tr><td><b>Username Variable</b></td><td><code>DOCKER_USER</code></td><td>Stores Docker username</td></tr>
+<tr><td><b>Password Variable</b></td><td><code>DOCKER_PASS</code></td><td>Stores Docker password</td></tr>
+</table>
+
+<p>💡 Jenkins injects these as environment variables during the build — so <code>$DOCKER_USER</code> and <code>$DOCKER_PASS</code> become available in your shell steps.</p>
+
+<hr>
+
+<h2>🔧 Build Step 3: Push Docker Image</h2>
+
+<pre><code class="language-bash">
+echo "--- 3. PUSHING DOCKER IMAGE ---"
+
+# Define image tag using Jenkins build number
+export IMAGE_TAG="praveen581348/senderservice:${BUILD_NUMBER}"
+
+echo "Logging in to Docker Hub as $DOCKER_USER..."
+echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+
+echo "Pushing image: $IMAGE_TAG"
+docker push $IMAGE_TAG
+echo "Push complete."
+</code></pre>
+
+<hr>
+
+<h3>✅ Result:</h3>
+<p>Jenkins securely logs in using the credential binding, pushes your Docker image with the build number tag, and never exposes the password in logs.</p>
+
+<hr/>
+<hr/>
+# 📝 Jenkins Lab Notes: Phase 1.3 (Final Step) — The Helm Deploy Step
+
+<hr>
+
+<h2>🎯 Overview</h2>
+<p>This final step completes your <b>Sender Service</b> CI/CD pipeline. It runs after the Maven build and Docker image push, deploying the newly built container to your Kubernetes cluster using <b>Helm</b>.</p>
+
+<hr>
+
+<h2>⚙️ 1. The "Execute Shell" Command</h2>
+<p>This is the script configured in your Freestyle job's final <b>Build</b> step.</p>
+
+<pre><code class="language-bash">
+echo "--- 4. DEPLOYING TO KUBERNETES VIA HELM ---"
+
+# 1. Navigate into the 'helm' directory
+cd helm
+
+echo "Upgrading Helm release 'senderservice'..."
+
+# 2. Run the Helm Upgrade command
+helm upgrade --install senderservice ./senderservice-chart   -n sender   --set image.tag=${BUILD_NUMBER}   --wait
+  
+echo "Helm upgrade complete. Rolling update started."
+</code></pre>
+
+<hr>
+
+<h2>🔍 2. In-Depth Breakdown of the Helm Command</h2>
+<p>Here's what each part of the <code>helm upgrade</code> command does:</p>
+
+<table border="1" cellspacing="0" cellpadding="5">
+<tr><th>Command / Flag</th><th>Meaning</th><th>Purpose</th></tr>
+<tr><td><code>helm upgrade</code></td><td>Updates an existing release with new chart/configuration.</td><td>Standard command for CI/CD deployments.</td></tr>
+<tr><td><code>--install</code></td><td>Installs the chart if the release doesn’t already exist.</td><td>Makes deployment idempotent — works on first and subsequent runs.</td></tr>
+<tr><td><code>senderservice</code></td><td>The Helm <b>Release Name</b>.</td><td>Identifies this specific deployment instance.</td></tr>
+<tr><td><code>./senderservice-chart</code></td><td>Path to your Helm chart folder.</td><td>Contains <code>Chart.yaml</code> and <code>templates/</code>.</td></tr>
+<tr><td><code>-n sender</code></td><td>Kubernetes namespace.</td><td>Deploys resources into <b>sender</b> namespace.</td></tr>
+<tr><td><code>--set image.tag=${BUILD_NUMBER}</code></td><td>Overrides image tag in <code>values.yaml</code> dynamically.</td><td>Deploys the image built by the current Jenkins build.</td></tr>
+<tr><td><code>--wait</code></td><td>Waits for all Pods to become ready before exiting.</td><td>Ensures stability; fails build if rollout fails.</td></tr>
+</table>
+
+<hr>
+
+<h2>🔐 3. Authentication & RBAC (Your Fix Explained)</h2>
+
+<p>When you run <code>helm upgrade</code> from Jenkins, Helm uses your in-cluster Kubernetes Service Account for authentication.</p>
+
+<ol>
+<li><b>Identity:</b> Jenkins Pod runs in the <code>jenkins</code> namespace using <code>serviceAccountName: jenkins-sa</code>.</li>
+<li><b>Authentication:</b> Helm reads the in-cluster kubeconfig token for <code>jenkins-sa</code>.</li>
+<li><b>Authorization:</b> API server verifies permissions using <code>RoleBinding</code> → <code>Role</code> mapping.</li>
+<li><b>Permission Granted:</b> You added <code>replicasets</code> to your Role, allowing Helm to manage Deployments and ReplicaSets.</li>
+</ol>
+
+<p><b>✅ Result:</b> Helm now has full permission to perform rolling updates in the <code>sender</code> namespace.</p>
+
+<hr>
+
+<h2>🚀 4. What Happens in Kubernetes (The Rolling Update)</h2>
+
+<p>Once authorized, Helm performs a rolling update:</p>
+
+<ol>
+<li>Compares current deployment (e.g., tag <code>:6</code>) with new chart (tag <code>:7</code>).</li>
+<li>Detects a change in <code>spec.template.spec.containers[0].image</code>.</li>
+<li>Patches <b>senderservice-senderservice-deployment</b> with the new image tag.</li>
+<li>Kubernetes Deployment Controller initiates rolling update:
+  <ul>
+    <li>Creates new <b>ReplicaSet</b> for tag <code>:7</code>.</li>
+    <li>Launches new Pod with <code>praveen581348/senderservice:7</code>.</li>
+    <li>Waits for the new Pod to become <b>Ready</b>.</li>
+    <li>Terminates the old Pod (tag <code>:6</code>).</li>
+  </ul>
+</li>
+<li><code>helm --wait</code> monitors rollout until success and returns exit code <code>0</code>.</li>
+<li>Jenkins marks build as <b>SUCCESS</b>.</li>
+</ol>
+
+<hr>
+
+<h2>🏁 Conclusion</h2>
+<p>By fixing your RBAC permissions and integrating Helm in your Jenkins pipeline, you have successfully built a complete, production-grade CI/CD system that performs:</p>
+
+<ul>
+<li>Automated build and test via Maven</li>
+<li>Secure image push to DockerHub</li>
+<li>Dynamic Helm-based deployment to Kubernetes</li>
+<li>Fully automated rolling updates with rollback safety</li>
+</ul>
+
+<p><b>🎉 Congratulations!</b> You now have a fully functional end-to-end CI/CD pipeline for your Sender Service.</p>
+<hr/>
+<hr/>
+
+<!-- HTML Styled Documentation for GitHub -->
+
+<h1 align="center">🚀 CI Pipeline Setup for Receiver Service Using Jenkins Pipeline Job</h1>
+
+<p align="center">
+  <strong>(Detailed Notes + Concepts + Step-by-Step Explanation)</strong>
+</p>
+
+---
+
+Creating a CI Pipeline for the **Receiver Service** using Jenkins Pipeline provides a fully automated process for:
+
+✔ Building the Java application with Maven  
+✔ Uploading the artifact to Nexus  
+✔ Building a Docker image  
+✔ Pushing the image to DockerHub  
+
+This documentation explains how the pipeline was configured, what options were selected, and why pipeline jobs are preferred.
+
+---
+
+<h2>🚀 1. Why Use a Jenkins Pipeline Instead of a Freestyle Job?</h2>
+
+<div style="display:flex; gap:20px;">
+
+<div style="flex:1;">
+<h3>❌ Freestyle Job (Old style)</h3>
+<ul>
+  <li>UI-driven</li>
+  <li>Hard to maintain</li>
+  <li>No version control</li>
+  <li>Changing Jenkins UI changes the job</li>
+  <li>Not reusable across environments</li>
+</ul>
+</div>
+
+<div style="flex:1;">
+<h3>✔ Pipeline Job (Modern CI/CD)</h3>
+<ul>
+  <li>Written as code (Jenkinsfile)</li>
+  <li>Stored in GitHub — version controlled</li>
+  <li>Supports complex logic</li>
+  <li>Supports parallel stages</li>
+  <li>Triggers automatically via GitHub webhook</li>
+  <li>Reusable across Dev, QA, Prod</li>
+</ul>
+</div>
+</div>
+
+<p><strong>📌 In short: Pipeline = CI/CD as Code (Industry Standard)</strong></p>
+
+---
+
+<h2>🏗 2. Creating a Jenkins Pipeline Job – Step by Step</h2>
+
+✔ Go to: <strong>Jenkins Dashboard → New Item</strong>  
+✔ Choose: <code>Pipeline</code>  
+✔ Enter job name: <code>receiver-pipeline</code>  
+✔ Click <strong>OK</strong>
+
+---
+
+<h2>🧰 3. Pipeline Job Configuration Options</h2>
+
+These are important sections inside the Pipeline job configuration screen.
+
+---
+
+<h3>🔹 General Section</h3>
+
+| Option | Why we use it |
+|--------|---------------|
+| ✔ Discard Old Builds | Prevents Jenkins storage from filling |
+| ✔ GitHub Project (optional) | Links build job to GitHub repo |
+
+If enabled, use:
+
+```
+https://github.com/praveen581348/receiverservice
+```
+
+---
+
+<h3>🔹 Build Triggers Section</h3>
+
+⭐ **Poll SCM:**  
+```
+H/5 * * * *
+```
+(Jenkins checks repo every 5 minutes)
+
+⭐ **GitHub hook trigger for GITScm polling:**  
+Automatically triggers CI on Git push.
+
+---
+
+<h3>🔹 Advanced Project Options</h3>
+
+Pipelines can later be extended into **Multibranch Pipeline Jobs**.
+
+---
+
+<h2>🔐 4. Credentials Needed & Why</h2>
+
+Your receiver pipeline uses three key credentials:
+
+---
+
+### ✔ 1. Nexus Credentials (`nexus_cred`)
+
+Used for Maven deploy:
+
+```
+mvn deploy
+```
+
+---
+
+### ✔ 2. DockerHub Credentials (`dockerhub-creds`)
+
+Used for:
+```
+docker login  
+docker push  
+```
+
+---
+
+### ✔ 3. Maven settings.xml via Config File Provider (`receiverservice-settings`)
+
+Stores:
+- Nexus server ID  
+- Nexus username  
+- Nexus password  
+
+Loaded using:
+
+```groovy
+configFileProvider([configFile(fileId: 'receiverservice-settings', variable: 'MAVEN_SETTINGS')])
+```
+
+---
+
+<h2>🧩 5. Pipeline Script Section – Using SCM</h2>
+
+In Jenkins Pipeline config, choose:
+
+```
+Definition: Pipeline script from SCM
+```
+
+SCM Settings:
+
+| Field | Value |
+|-------|--------|
+| SCM | Git |
+| Repository URL | https://github.com/praveen581348/receiverservice.git |
+| Branch | master |
+| Script Path | Jenkinsfile |
+
+Jenkins now automatically:
+
+1. Clones your repo  
+2. Reads Jenkinsfile  
+3. Runs CI pipeline  
+
+This is called **Pipeline-as-Code**.
+
+---
+
+<h2>🧪 6. Explanation of Each Stage in Your Jenkinsfile</h2>
+
+Below is your complete pipeline with explanation.
+
+---
+
+<h3>🟦 Stage 1 — Checkout Code</h3>
+
+```groovy
+git url: 'https://github.com/praveen581348/receiverservice.git', branch: 'master'
+```
+Pulls the latest source code.
+
+---
+
+<h3>🟧 Stage 2 — Build & Push to Nexus</h3>
+
+```groovy
+configFileProvider([configFile(fileId: 'receiverservice-settings', variable: 'MAVEN_SETTINGS')]) {
+    withCredentials([usernamePassword(credentialsId: 'nexus_cred', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+        sh "mvn clean deploy -DskipTests -s $MAVEN_SETTINGS"
+    }
+}
+```
+
+✔ Loads settings.xml  
+✔ Injects Nexus credentials  
+✔ Builds JAR  
+✔ Uploads artifact to Nexus  
+
+---
+
+<h3>🟩 Stage 3 — Build & Push Docker Image</h3>
+
+Docker build:
+
+```groovy
+sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+```
+
+Docker login and push:
+
+```groovy
+withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+    sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+}
+```
+
+Result example:
+
+```
+praveen581348/receiverservice:28
+```
+
+---
+
+<h2>🟪 7. Post Actions</h2>
+
+```groovy
+post {
+    success { echo 'Pipeline Succeeded!' }
+    failure { echo 'Pipeline Failed! Check logs.' }
+}
+```
+
+Uses:
+- Slack/email notifications  
+- Cleanup  
+- Build reporting  
+
+---
+
+<h2>⭐ 8. Benefits of Jenkins Pipeline CI for Receiver Service</h2>
+
+✔ CI/CD as Code  
+✔ Secure credential handling  
+✔ Version controlled pipeline  
+✔ Reusable across environments  
+✔ Clean logs & visual stages  
+✔ Easily extendable (Helm, ArgoCD, SonarQube)
+
+---
+
+<h2>🎯 Final Summary</h2>
+
+This CI pipeline fully automates:
+
+1. Code checkout  
+2. Maven build  
+3. Deploy to Nexus  
+4. Docker build  
+5. Docker push  
+
+All actions are safely secured and executed using a Jenkinsfile stored in GitHub.
+
+---
+
+<h3 align="center">💡 This is a production-ready CI pipeline setup using Jenkins Pipeline-as-Code.</h3>

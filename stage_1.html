@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>End-to-End DevOps Project: Stage 1 Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Slate & Blue (Professional, calm, and technical) -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        /* Custom Scrollbar for code blocks */
+        .code-scroll::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .code-scroll::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .code-scroll::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        .code-scroll::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Application Structure Plan:
+         1. Header: Title and Intro.
+         2. Navigation: Tab-based navigation to switch between logical sections (Infrastructure, Architecture, Toolchain, CI, Observability, GitOps).
+         3. Dashboard Content: Dynamic content area updating based on selection.
+            - Infrastructure: Cluster node visualization (Chart.js), Port mapping table.
+            - Architecture: Interactive Flow Diagram (HTML/CSS), Data Service Logic explainer.
+            - Toolchain: Tool grid with descriptions and roles.
+            - CI/CD: Workflow steps visualization (Step-by-step list), Pipeline Comparison.
+            - Observability: Monitoring stack breakdown, Sample Metric visualization (Chart.js).
+            - GitOps: Repo structure view, ArgoCD workflow.
+         4. Footer: Summary and Next Steps.
+    -->
+
+    <!-- Header -->
+    <header class="bg-slate-900 text-white p-6 shadow-lg">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold text-blue-400">End-to-End DevOps Project</h1>
+            <p class="text-slate-400 mt-2">Stage 1: Foundation, Microservices, CI/CD, and Observability</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6 flex flex-col md:flex-row gap-6">
+
+        <!-- Navigation Sidebar -->
+        <nav class="w-full md:w-1/4 flex flex-col space-y-2">
+            <button onclick="showSection('infra')" id="btn-infra" class="nav-btn text-left px-4 py-3 rounded-lg bg-white shadow hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors border-l-4 border-transparent focus:outline-none active-nav">
+                🏗️ Infrastructure
+            </button>
+            <button onclick="showSection('arch')" id="btn-arch" class="nav-btn text-left px-4 py-3 rounded-lg bg-white shadow hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors border-l-4 border-transparent focus:outline-none">
+                🧩 Microservices
+            </button>
+            <button onclick="showSection('tools')" id="btn-tools" class="nav-btn text-left px-4 py-3 rounded-lg bg-white shadow hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors border-l-4 border-transparent focus:outline-none">
+                🛠️ Toolchain
+            </button>
+            <button onclick="showSection('ci')" id="btn-ci" class="nav-btn text-left px-4 py-3 rounded-lg bg-white shadow hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors border-l-4 border-transparent focus:outline-none">
+                🚀 Continuous Integration
+            </button>
+            <button onclick="showSection('obs')" id="btn-obs" class="nav-btn text-left px-4 py-3 rounded-lg bg-white shadow hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors border-l-4 border-transparent focus:outline-none">
+                📈 Observability
+            </button>
+            <button onclick="showSection('gitops')" id="btn-gitops" class="nav-btn text-left px-4 py-3 rounded-lg bg-white shadow hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors border-l-4 border-transparent focus:outline-none">
+                📦 GitOps Preparation
+            </button>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="w-full md:w-3/4 bg-white rounded-xl shadow-sm p-6 min-h-[600px]" id="content-display">
+            <!-- Dynamic Content Injected Here -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-100 border-t border-slate-200 mt-12 py-8 text-center text-slate-500 text-sm">
+        <p>Stage 1 Complete • Ready for Platform/Dev/Prod Cluster Separation (Stage 2)</p>
+    </footer>
+
+    <script>
+        // Data & Content Definitions
+        const contentData = {
+            infra: {
+                title: "1. Infrastructure Setup (Stage 1.1)",
+                intro: "We established a robust local Kubernetes environment using <strong>Kind (Kubernetes in Docker)</strong>. This setup simulates a production-like multi-node cluster, complete with persistence layers and exposed ports for all critical DevOps tools.",
+                html: `
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h3 class="text-lg font-semibold text-slate-700 mb-3">Cluster Configuration</h3>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-center"><span class="w-4 h-4 mr-2 bg-blue-500 rounded-full"></span><strong>Tool:</strong> Kind (kind)</li>
+                                <li class="flex items-center"><span class="w-4 h-4 mr-2 bg-indigo-500 rounded-full"></span><strong>Topology:</strong> 1 Control Plane, 2 Workers</li>
+                                <li class="flex items-center"><span class="w-4 h-4 mr-2 bg-emerald-500 rounded-full"></span><strong>Persistence:</strong> <code>~/jenkins-data</code> mapped to container</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h3 class="text-lg font-semibold text-slate-700 mb-3">Key Port Mappings</h3>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <div class="p-2 bg-white rounded border border-slate-200">Jenkins: 30080</div>
+                                <div class="p-2 bg-white rounded border border-slate-200">Nexus: 30081</div>
+                                <div class="p-2 bg-white rounded border border-slate-200">ArgoCD: 30101</div>
+                                <div class="p-2 bg-white rounded border border-slate-200">Prometheus: 30104</div>
+                                <div class="p-2 bg-white rounded border border-slate-200">Grafana: 30107</div>
+                                <div class="p-2 bg-white rounded border border-slate-200">Apps: 30098/30084</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-semibold text-slate-700 mb-4">Cluster Resource Distribution (Simulated)</h3>
+                        <div class="chart-container">
+                            <canvas id="infraChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-slate-400 mt-2">Visual representation of node roles</p>
+                    </div>
+                `
+            },
+            arch: {
+                title: "2. Microservices Architecture (Stage 1.2)",
+                intro: "The application is a distributed system demonstrating asynchronous messaging, persistence, and caching patterns. It flows from user input to long-term archival storage.",
+                html: `
+                    <div class="flex flex-col space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <h3 class="font-bold text-blue-800">A. Sender Service (Spring Boot)</h3>
+                            <p class="text-sm text-blue-600">Producer / Ingress. Hosts Web UI. Publishes to <strong>Kafka</strong> topic <code>test-topic</code>.</p>
+                        </div>
+                        <div class="flex justify-center"><span class="text-2xl">⬇️</span></div>
+                        <div class="bg-orange-50 p-4 rounded-lg border border-orange-100">
+                            <h3 class="font-bold text-orange-800">B. Messaging (Kafka & Zookeeper)</h3>
+                            <p class="text-sm text-orange-600">Message Broker. Decouples Sender & Receiver for async reliability.</p>
+                        </div>
+                        <div class="flex justify-center"><span class="text-2xl">⬇️</span></div>
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+                            <h3 class="font-bold text-green-800">C. Receiver Service (Spring Boot)</h3>
+                            <p class="text-sm text-green-600">Consumer. Listens to topic, displays on dashboard, triggers Save to MySQL.</p>
+                        </div>
+                         <div class="flex justify-center"><span class="text-2xl">⬇️</span></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                                <h3 class="font-bold text-purple-800">D. Data Service (Python)</h3>
+                                <p class="text-sm text-purple-600">Query & Archival. Smart caching (Redis -> MySQL). Submits to MongoDB.</p>
+                            </div>
+                             <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <h3 class="font-bold text-slate-800">E. Data Stores</h3>
+                                <ul class="text-sm text-slate-600 list-disc list-inside">
+                                    <li><strong>MySQL:</strong> Transactional System of Record</li>
+                                    <li><strong>Redis:</strong> High-speed Cache</li>
+                                    <li><strong>MongoDB:</strong> NoSQL Historical Store</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            tools: {
+                title: "3. CI/CD Toolchain Setup (Stage 1.3 - 1.7)",
+                intro: "A robust set of industry-standard DevOps tools was deployed within the 'platform' namespace to manage the entire software lifecycle.",
+                html: `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                            <div class="text-4xl mb-3">📦</div>
+                            <h3 class="font-bold text-slate-700">Nexus Repository</h3>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider mb-2">Artifact Storage</p>
+                            <p class="text-sm text-slate-600">Hosted Maven repositories for storing build JARs. Configured in <code>pom.xml</code> and Jenkins settings.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                            <div class="text-4xl mb-3">🔍</div>
+                            <h3 class="font-bold text-slate-700">SonarQube</h3>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider mb-2">Code Quality</p>
+                            <p class="text-sm text-slate-600">Static analysis for bugs and vulnerabilities. Integrated via Jenkins Scanner plugin.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                            <div class="text-4xl mb-3">🐳</div>
+                            <h3 class="font-bold text-slate-700">Docker Hub</h3>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider mb-2">Container Registry</p>
+                            <p class="text-sm text-slate-600">Stores production-ready images tagged with build numbers.</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 bg-slate-900 rounded-lg p-4 code-scroll overflow-x-auto">
+                        <code class="text-xs text-green-400 font-mono">
+                            # Toolchain Integration Check<br>
+                            > Nexus: http://nexus-service.artifactory...:8081 ✅<br>
+                            > SonarQube: http://sonarqube.platform...:9000 ✅<br>
+                            > Docker Registry: index.docker.io/praveen581348 ✅
+                        </code>
+                    </div>
+                `
+            },
+            ci: {
+                title: "4. Continuous Integration (Stage 1.8)",
+                intro: "Two distinct CI strategies were implemented to demonstrate flexibility: a Freestyle job for learning fundamentals and a Declarative Pipeline for modern 'Pipeline-as-Code'.",
+                html: `
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="text-lg font-bold text-slate-800">A. Sender Service (Freestyle Job)</h3>
+                            <p class="text-sm text-slate-500 mb-2">Purpose: Fundamental Build Steps</p>
+                            <ol class="list-decimal list-inside text-sm text-slate-700 space-y-1">
+                                <li><strong>SCM:</strong> Poll GitHub every 5 mins.</li>
+                                <li><strong>Build:</strong> <code>mvn clean deploy</code> to Nexus.</li>
+                                <li><strong>Quality:</strong> Run SonarQube analysis.</li>
+                                <li><strong>Package:</strong> Docker build with dynamic tag.</li>
+                                <li><strong>Publish:</strong> Push to Docker Hub.</li>
+                                <li><strong>Deploy:</strong> <code>helm upgrade</code> to 'sender' namespace.</li>
+                            </ol>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="text-lg font-bold text-slate-800">B. Receiver Service (Pipeline Job)</h3>
+                            <p class="text-sm text-slate-500 mb-2">Purpose: Modern Pipeline-as-Code</p>
+                            <ol class="list-decimal list-inside text-sm text-slate-700 space-y-1">
+                                <li><strong>Checkout:</strong> Clone Repo via Jenkinsfile.</li>
+                                <li><strong>Build:</strong> Inject Nexus credentials via <code>configFileProvider</code>.</li>
+                                <li><strong>Docker:</strong> Build & Push image.</li>
+                                <li><strong>Deploy:</strong> <code>kubectl set image</code> rolling update.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                         <h3 class="text-lg font-semibold text-slate-700 mb-4">Pipeline Execution Stats (Simulated)</h3>
+                        <div class="chart-container">
+                            <canvas id="ciChart"></canvas>
+                        </div>
+                    </div>
+                `
+            },
+            obs: {
+                title: "5. Observability (Stage 1.9)",
+                intro: "A complete monitoring stack was implemented using Prometheus for collection and Grafana for visualization, ensuring full visibility into cluster and application health.",
+                html: `
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                            <h3 class="font-bold text-red-600 mb-2">🔥 Challenges & Fixes</h3>
+                            <ul class="text-sm space-y-3">
+                                <li class="bg-red-50 p-2 rounded">
+                                    <span class="font-semibold">Issue:</span> Connection Refused<br>
+                                    <span class="font-semibold text-green-600">Fix:</span> Set <code>SERVER_ADDRESS=0.0.0.0</code> in app deployment to bind to all interfaces.
+                                </li>
+                                <li class="bg-red-50 p-2 rounded">
+                                    <span class="font-semibold">Issue:</span> Missing Targets<br>
+                                    <span class="font-semibold text-green-600">Fix:</span> Named service ports <code>http</code> and matched ServiceMonitor selectors.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                            <h3 class="font-bold text-blue-600 mb-2">📊 Stack Components</h3>
+                            <ul class="text-sm space-y-2">
+                                <li><strong>Prometheus:</strong> <code>kube-prometheus-stack</code> chart. Ephemeral storage for Kind.</li>
+                                <li><strong>Service Discovery:</strong> Custom <code>ServiceMonitor</code> scraping <code>/actuator/prometheus</code> & <code>/metrics</code>.</li>
+                                <li><strong>Grafana:</strong> NodePort 30107. Visualizing Request Rate (RPS) and Node Health.</li>
+                            </ul>
+                        </div>
+                     </div>
+                `
+            },
+            gitops: {
+                title: "6. GitOps Preparation (Stage 1.10 - 1.11)",
+                intro: "The final stage prepared the architecture for advanced Continuous Deployment by restructuring configuration management.",
+                html: `
+                    <div class="bg-slate-800 text-slate-200 p-6 rounded-xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Repository Separation Strategy</h3>
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-blue-400 mb-2">App Repositories</h4>
+                                <p class="text-sm text-slate-400 mb-2">Contains Source Code + Dockerfile</p>
+                                <div class="bg-slate-900 p-3 rounded font-mono text-xs">
+                                    senderservice/<br>
+                                    receiverservice/
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-center text-2xl">➡️</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-green-400 mb-2">Config Repository</h4>
+                                <p class="text-sm text-slate-400 mb-2">Contains Helm Values for Dev/Prod</p>
+                                <div class="bg-slate-900 p-3 rounded font-mono text-xs">
+                                    k8s-manifests/<br>
+                                    ├── dev/ values.yaml<br>
+                                    └── prod/ values.yaml
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 border-t border-slate-700 pt-4">
+                            <h4 class="font-bold text-purple-400 mb-2">🐙 ArgoCD Role</h4>
+                            <p class="text-sm">Watches the <strong>k8s-manifests</strong> repo. When Jenkins updates an image tag in the config repo, ArgoCD automatically syncs the change to the cluster.</p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // Charts Configuration
+        let infraChartInstance = null;
+        let ciChartInstance = null;
+
+        function renderInfraChart() {
+            const ctx = document.getElementById('infraChart').getContext('2d');
+            if (infraChartInstance) infraChartInstance.destroy();
+            
+            infraChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Control Plane', 'Worker 1', 'Worker 2'],
+                    datasets: [{
+                        data: [1, 1, 1],
+                        backgroundColor: ['#3b82f6', '#6366f1', '#10b981'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        function renderCiChart() {
+             const ctx = document.getElementById('ciChart').getContext('2d');
+            if (ciChartInstance) ciChartInstance.destroy();
+
+            ciChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['SCM Checkout', 'Maven Build', 'Sonar Scan', 'Docker Build', 'K8s Deploy'],
+                    datasets: [{
+                        label: 'Avg Duration (s)',
+                        data: [5, 45, 30, 60, 15],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // Navigation Logic
+        function showSection(sectionId) {
+            // Update Content
+            const content = contentData[sectionId];
+            const displayDiv = document.getElementById('content-display');
+            
+            displayDiv.innerHTML = `
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">${content.title}</h2>
+                <p class="text-slate-600 mb-6 text-lg leading-relaxed">${content.intro}</p>
+                ${content.html}
+            `;
+
+            // Update Active State
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active-nav', 'bg-blue-50', 'text-blue-600', 'border-blue-500');
+                btn.classList.add('border-transparent');
+            });
+            const activeBtn = document.getElementById(`btn-${sectionId}`);
+            activeBtn.classList.add('active-nav', 'bg-blue-50', 'text-blue-600', 'border-blue-500');
+            activeBtn.classList.remove('border-transparent');
+
+            // Render Charts if section requires it
+            if (sectionId === 'infra') setTimeout(renderInfraChart, 100);
+            if (sectionId === 'ci') setTimeout(renderCiChart, 100);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('infra');
+        });
+
+    </script>
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Chosen Palette: Slate & Blue -->
+    <!-- Application Structure Plan: Sidebar navigation for main stages (Infra, Microservices, Tools, CI, Obs, GitOps) with dynamic content area holding text and Chart.js visuals. -->
+    <!-- Visualization & Content Choices: 
+         - Infra: Doughnut chart for node dist (Chart.js) -> Visualizes cluster topology.
+         - Microservices: Flex/Grid layout -> Shows data flow visually without SVG.
+         - CI: Bar chart for pipeline steps (Chart.js) -> Visualizes build time/process.
+         - Tools: Grid cards -> Clean summary of stack.
+         - Observability: Colored lists/cards -> Highlights problem/solution pattern.
+    -->
+</body>
+</html>
