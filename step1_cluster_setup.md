@@ -1,152 +1,256 @@
-<h1>📘 Step 1: Infrastructure Setup Notes (Multi-Cluster Kind)</h1>
+<div>
 
-<p>This is an excellent start to your multi-cluster journey! You are defining a very clear boundary between your <strong>Platform</strong> (management tools) and your <strong>Workload</strong> (application environments: Dev & Prod). This "Hub-and-Spoke" architecture is a standard practice for scalable and secure Kubernetes deployments.</p>
+<h1>📘 Step 1: Multi-Cluster Infrastructure Setup Notes</h1>
 
-<p>Here is a detailed guide and set of notes for <strong>Step 1: Infrastructure Setup</strong>, covering the creation of your three Kind clusters, persistent storage configuration, and how to manage multiple cluster contexts with <code>kubectl</code>.</p>
-
-<hr/>
-
-<h2>1. Architectural Overview</h2>
-
-<p>We are establishing a three-cluster topology to separate concerns:</p>
-
-<ul>
-  <li><strong>Platform Cluster (<code>platform</code>):</strong> The central management plane. It hosts shared DevOps tools (Jenkins, Nexus, SonarQube, etc.) and is not exposed to application traffic.</li>
-  <li><strong>Development Cluster (<code>dev</code>):</strong> The target for active development and integration testing. It runs the latest versions of your microservices and databases.</li>
-  <li><strong>Production Cluster (<code>prd</code>):</strong> The stable, live environment. It hosts the production-ready versions of your services.</li>
-</ul>
-
-<h3>Key Configuration Strategies</h3>
-
-<ul>
-  <li><strong>Host Port Mapping:</strong> Each cluster has distinct <code>hostPort</code> mappings in its control plane node, allowing access from your host without conflicts.</li>
-</ul>
-
-<p>Examples:</p>
-
-<ul>
-  <li><strong>Platform:</strong> 30080, 30081, 30101, etc.</li>
-  <li><strong>Dev:</strong> 30084, 30098, etc.</li>
-  <li><strong>Prod:</strong> 32000, 32001, etc.</li>
-</ul>
-
-<ul>
-  <li><strong>Persistent Storage (extraMounts):</strong> Each cluster mounts a dedicated WSL directory to ensure data survival across restarts.</li>
-</ul>
-
-<p>Examples:</p>
-
-<ul>
-  <li>Platform → <code>~/platform-data</code> → <code>/mnt/data</code></li>
-  <li>Dev → <code>~/application_data</code> → <code>/mnt/app-data</code></li>
-  <li>Prod → <code>~/prd_application_data</code> → <code>/mnt/app-data</code></li>
-</ul>
-
-<hr/>
-
-<h2>📁 Git Repository for Kind Cluster YAML Files</h2>
-
-<p>All cluster configuration YAML files (<code>platform_cluster.yaml</code>, <code>dev_cluster.yaml</code>, <code>prd_Cluster.yaml</code>) are stored in the following repository:</p>
-
+<h2>1. Architectural Overview: The Hub-and-Spoke Model</h2>
+<p align="center">
+  <img src="step1.png"  width="600"/>
+</p>
 <p>
-  🔗 <a href="https://github.com/praveen581348/cluster" target="_blank">
-  https://github.com/praveen581348/cluster
-  </a>
+We are establishing a sophisticated four-cluster topology running locally on Kind (Kubernetes in Docker). 
+This "Hub-and-Spoke" architecture separates concerns, ensures security, and mimics a real enterprise production lifecycle.
 </p>
 
-<p>Clone this repository before creating clusters:</p>
+<h3>The Four Clusters</h3>
 
-<pre><code>git clone https://github.com/praveen581348/cluster
-cd cluster
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>Cluster Name</th>
+<th>Role & Purpose</th>
+<th>Key Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><b>Platform</b> (Hub)</td>
+<td>Management Plane – Central orchestrator hosting DevOps tools</td>
+<td>Hosts Jenkins, Nexus, Prometheus, Grafana</td>
+</tr>
+<tr>
+<td><b>Dev</b> (Spoke)</td>
+<td>Active development cluster for rapid iterations</td>
+<td>High churn, ephemeral databases</td>
+</tr>
+<tr>
+<td><b>QA</b> (Spoke)</td>
+<td>Quality Assurance, Security Scanning</td>
+<td>Hosts SonarQube, Trivy; mimics Prod setup</td>
+</tr>
+<tr>
+<td><b>Prod</b> (Spoke)</td>
+<td>Stable environment serving end users</td>
+<td>Runs production-ready builds</td>
+</tr>
+</tbody>
+</table>
 
 <hr/>
 
-<h2>2. Setup Commands</h2>
+<h2>2. Key Configuration Strategies</h2>
 
-<p>Run these commands sequentially in your WSL terminal.</p>
+<h3>A. Distinct Host Port Mapping</h3>
 
-<h3>2.1 Prepare Persistent Storage Directories</h3>
+<p>Each cluster receives its own non-overlapping port range:</p>
 
-<pre><code># --- 1. PLATFORM DATA (Jenkins, Nexus, SonarQube, etc.) ---
-mkdir -p ~/platform-data/{grafana,jenkins,nexus,prometheus,sonarqube}
-sudo chmod -R 777 ~/platform-data
+<ul>
+<li><b>Platform:</b> 30080–30100</li>
+<li><b>Dev:</b> 30200–30300</li>
+<li><b>QA:</b> 31000–31200</li>
+<li><b>Prod:</b> 32000–32200</li>
+</ul>
 
-# --- 2. DEV APPLICATION DATA ---
-mkdir -p ~/application_data/{mysql,mongodb,redis,kafka,zookeeper,rabbitmq,sender,receiver}
-sudo chmod -R 777 ~/application_data
+<h3>B. Persistent Storage (extraMounts)</h3>
 
-# --- 3. PROD APPLICATION DATA ---
-mkdir -p ~/prd_application_data/{mysql,mongodb,redis,kafka,zookeeper,rabbitmq,sender,receiver}
-sudo chmod -R 777 ~/prd_application_data
+<p>Each cluster mounts a unique host directory:</p>
 
-echo "✅ Persistent storage directories created and configured."
-</code></pre>
+<ul>
+<li>Platform → <code>~/platform-data</code></li>
+<li>Dev → <code>~/dev_application_data</code></li>
+<li>QA → <code>~/qa_data</code></li>
+<li>Prod → <code>~/prd_application_data</code></li>
+</ul>
 
-<h3>2.2 Create the Clusters</h3>
+<hr/>
 
-<p>Make sure you run these from the directory containing <code>platform_cluster.yaml</code>, <code>dev_cluster.yaml</code>, and <code>prd_Cluster.yaml</code>.</p>
+<h2>3. Cluster Configuration Files (YAML)</h2>
 
-<pre><code># --- 1. CREATE PLATFORM CLUSTER ---
+<h3>3.1 Platform Cluster (<code>platform_cluster.yaml</code>)</h3>
+
+<pre>
+<code>
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: platform
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 30080
+      - containerPort: 30081
+        hostPort: 30081
+      - containerPort: 30090
+        hostPort: 30090
+      - containerPort: 30104
+        hostPort: 30104
+      - containerPort: 30107
+        hostPort: 30107
+    extraMounts:
+      - hostPath: /var/run/docker.sock
+        containerPath: /var/run/docker.sock
+      - hostPath: ~/platform-data
+        containerPath: /mnt/data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/platform-data
+        containerPath: /mnt/data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/platform-data
+        containerPath: /mnt/data
+</code>
+</pre>
+
+<h3>3.2 Dev Cluster (<code>dev_cluster.yaml</code>)</h3>
+
+<pre>
+<code>
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: dev
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30084
+        hostPort: 30084
+      - containerPort: 30098
+        hostPort: 30098
+      - containerPort: 30113
+        hostPort: 30113
+    extraMounts:
+      - hostPath: ~/dev_application_data
+        containerPath: /mnt/app-data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/dev_application_data
+        containerPath: /mnt/app-data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/dev_application_data
+        containerPath: /mnt/app-data
+</code>
+</pre>
+
+<h3>3.3 QA Cluster (<code>qa_cluster.yaml</code>)</h3>
+
+<pre>
+<code>
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: qa
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 31000
+        hostPort: 31000
+      - containerPort: 31084
+        hostPort: 31084
+      - containerPort: 31098
+        hostPort: 31098
+    extraMounts:
+      - hostPath: ~/qa_data
+        containerPath: /mnt/qa-data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/qa_data
+        containerPath: /mnt/qa-data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/qa_data
+        containerPath: /mnt/qa-data
+</code>
+</pre>
+
+<h3>3.4 Prod Cluster (<code>prd_cluster.yaml</code>)</h3>
+
+<pre>
+<code>
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: prd
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 32000
+        hostPort: 32000
+      - containerPort: 32001
+        hostPort: 32001
+      - containerPort: 32007
+        hostPort: 32007
+    extraMounts:
+      - hostPath: ~/prd_application_data
+        containerPath: /mnt/app-data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/prd_application_data
+        containerPath: /mnt/app-data
+  - role: worker
+    extraMounts:
+      - hostPath: ~/prd_application_data
+        containerPath: /mnt/app-data
+</code>
+</pre>
+
+<hr/>
+
+<h2>4. Setup Execution Steps</h2>
+
+<h3>4.1 Prerequisites</h3>
+<p>Ensure Docker Desktop or Docker Engine is running and Kind is installed.</p>
+
+<h3>4.2 Prepare Host Storage</h3>
+
+<pre>
+<code>
+mkdir -p ~/platform-data/{grafana,jenkins,nexus,prometheus} && sudo chmod -R 777 ~/platform-data
+mkdir -p ~/dev_application_data/{mysql,redis,kafka,zookeeper,rabbitmq} && sudo chmod -R 777 ~/dev_application_data
+mkdir -p ~/qa_data/{sonarqube_data,sonarqube_logs,trivy_cache} && sudo chmod -R 777 ~/qa_data
+mkdir -p ~/prd_application_data/{mysql,redis,kafka,zookeeper,rabbitmq} && sudo chmod -R 777 ~/prd_application_data
+</code>
+</pre>
+
+<h3>4.3 Create the Clusters</h3>
+
+<pre>
+<code>
 kind create cluster --config platform_cluster.yaml --name platform
-
-# --- 2. CREATE DEV CLUSTER ---
 kind create cluster --config dev_cluster.yaml --name dev
-
-# --- 3. CREATE PROD CLUSTER ---
-kind create cluster --config prd_Cluster.yaml --name prd
-
-echo "✅ All three clusters (platform, dev, prd) have been successfully created."
-</code></pre>
+kind create cluster --config qa_cluster.yaml --name qa
+kind create cluster --config prd_cluster.yaml --name prd
+</code>
+</pre>
 
 <hr/>
 
-<h2>3. Managing Multiple Clusters with kubectl</h2>
+<h2>5. Managing kubeconfig Contexts</h2>
 
-<p>Your <code>~/.kube/config</code> file stores authentication details, cluster API endpoints, and contexts. When you create a Kind cluster, Kind automatically adds:</p>
-
-<ul>
-  <li>A new <strong>cluster</strong> entry</li>
-  <li>A new <strong>user</strong> entry</li>
-  <li>A new <strong>context</strong> entry</li>
-  <li>Sets the new cluster as the <strong>current-context</strong></li>
-</ul>
-
-<h3>3.1 View All Contexts</h3>
-
-<pre><code>kubectl config get-contexts
-</code></pre>
-
-<h3>3.2 Switch to Platform Cluster</h3>
-
-<pre><code>kubectl config use-context kind-platform
+<pre>
+<code>
+kubectl config get-contexts
+kubectl config use-context kind-platform
+kubectl config use-context kind-qa
 kubectl get nodes
-</code></pre>
-
-<h3>Switch to Dev Cluster</h3>
-
-<pre><code>kubectl config use-context kind-dev
-kubectl get nodes
-</code></pre>
-
-<h3>Switch to Prod Cluster</h3>
-
-<pre><code>kubectl config use-context kind-prd
-kubectl get nodes
-</code></pre>
-
-<p><strong>Pro Tip:</strong> Install <code>kubectx</code> for faster context switching.</p>
+</code>
+</pre>
 
 <hr/>
 
-<h2>✅ Summary of Step 1</h2>
+<h2>📚 Learning Resources</h2>
 
 <ul>
-  <li>Designed a secure, scalable multi-cluster architecture</li>
-  <li>Prepared host-based persistent storage directories</li>
-  <li>Created <code>platform</code>, <code>dev</code>, and <code>prd</code> clusters with Kind</li>
-  <li>Learned how to manage contexts using <code>kubectl</code></li>
-  <li>Added GitHub repo for YAML configuration files</li>
+<li><a href="https://www.docker.com/get-started/">Docker – Get Started</a></li>
+<li><a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/">Kubernetes Basics</a></li>
+<li><a href="https://kind.sigs.k8s.io/docs/user/quick-start/">Kind Quick Start Guide</a></li>
 </ul>
 
-
+</div>
