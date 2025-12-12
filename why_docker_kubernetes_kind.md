@@ -62,40 +62,6 @@
 <p><strong>📘 Learn more:</strong> <a href="https://kind.sigs.k8s.io/docs/user/quick-start/" target="_blank">kind Documentation</a></p>
 
 <hr/>
-
-<h2>🧱 Architecture Overview</h2>
-
-<p>Here's what we're deploying inside our Kubernetes cluster (via kind):</p>
-
-<ul>
-  <li>Microservices:
-    <ul>
-      <li>senderservice (Spring Boot)</li>
-      <li>receiverservice (Spring Boot)</li>
-      <li>dataservice (Python)</li>
-    </ul>
-  </li>
-  <li>Messaging:
-    <ul>
-      <li>Kafka & Zookeeper</li>
-    </ul>
-  </li>
-  <li>Databases:
-    <ul>
-      <li>MySQL (relational store)</li>
-      <li>Redis (in-memory cache)</li>
-      <li>MongoDB (document store)</li>
-    </ul>
-  </li>
-  <li>Platform:
-    <ul>
-      <li>Kubernetes (via kind)</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="./app_flow.png" alt="Microservices Architecture Diagram" width="800"/></p>
-
 <hr/>
 
 <h2>📌 Summary</h2>
